@@ -1,0 +1,146 @@
+/**
+ * Command Palette styles
+ */
+
+// Variables
+$cmdk-overlay-bg: rgba(0, 0, 0, 0.30);
+$cmdk-panel-bg: #fff;
+$cmdk-panel-shadow: 0 6px 32px rgba(0, 0, 0, 0.16), 0 1.5px 4px rgba(0, 0, 0, 0.06);
+$cmdk-search-bg: #f6f6f7;
+$cmdk-search-border: #e3e3e3;
+$cmdk-search-focus-border: #7c3aed;
+$cmdk-item-hover-bg: #f1eaff;
+$cmdk-icon-color: #7c3aed;
+$cmdk-title-color: #2e2e3a;
+$cmdk-subtitle-color: #8b8b93;
+$cmdk-no-results-color: #8b8b93;
+
+// Overlay
+.cmdk-overlay {
+  position: fixed;
+  inset: 0;
+  background: $cmdk-overlay-bg;
+  z-index: 9998;
+  display: none;
+}
+
+// Panel
+.cmdk-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 420px;
+  background: $cmdk-panel-bg;
+  border-radius: 16px;
+  box-shadow: $cmdk-panel-shadow;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+  gap: 14px;
+  font-family: 'Inter', system-ui, sans-serif;
+  display: none;
+  min-width: 320px;
+  max-width: 90vw;
+  max-height: 80vh;
+  overflow: hidden;
+}
+
+// Search input
+.cmdk-search {
+  width: 100%;
+  font-size: 1.1em;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid $cmdk-search-border;
+  outline: none;
+  background: $cmdk-search-bg;
+  margin-bottom: 4px;
+  transition: border 0.2s;
+  box-sizing: border-box;
+  
+  &:focus {
+    border: 1.5px solid $cmdk-search-focus-border;
+    background: $cmdk-panel-bg;
+  }
+}
+
+// List
+.cmdk-list {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 50vh;
+}
+
+// Item
+.cmdk-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 8px;
+  border-radius: 9px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.12s;
+  min-height: 40px;
+  
+  &.selected,
+  &:hover {
+    background: $cmdk-item-hover-bg;
+  }
+}
+
+// Icon
+.cmdk-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $cmdk-icon-color;
+  font-size: 1.2em;
+}
+
+// Content
+.cmdk-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+// Title
+.cmdk-title {
+  font-size: 1em;
+  font-weight: 500;
+  color: $cmdk-title-color;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 320px;
+}
+
+// Subtitle
+.cmdk-subtitle {
+  font-size: 0.91em;
+  color: $cmdk-subtitle-color;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 280px;
+}
+
+// Responsive styles
+@media (max-width: 500px) {
+  .cmdk-panel {
+    width: 96vw;
+    min-width: 0;
+  }
+}

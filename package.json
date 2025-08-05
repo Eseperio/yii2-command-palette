@@ -1,0 +1,25 @@
+{
+  "name": "yii2-command-palette",
+  "version": "1.0.0",
+  "description": "A command palette widget for Yii2 projects",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "yii2",
+    "widget",
+    "command-palette"
+  ],
+  "author": "E.Alamo <erosdelalamo@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@vitejs/plugin-legacy": "^5.0.0",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "sass": "^1.69.5",
+    "vite": "^5.0.0"
+  }
+}

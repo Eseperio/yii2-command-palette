@@ -1,8 +1,23 @@
 
-reference.html
+# Dependency directories
 vendor/
-# Ignore system files
-.idea
+node_modules/
+
+# Generated files
+/src/assets/dist/
+
+# Test environment
+/tests/app/runtime/
+/tests/app/web/assets/
+
+# Reference files
+reference.html
+
+# IDE and system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
 *.sql
 *.log
 *.swp
@@ -11,3 +26,7 @@ vendor/
 *.tmp
 *.cache
 *.pid
+
+# Local configuration files
+.env
+.env.local

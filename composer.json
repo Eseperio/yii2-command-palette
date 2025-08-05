@@ -7,7 +7,8 @@
         "yiisoft/yii2": "^2.0"
     },
     "require-dev": {
-        "codeception/codeception": "^5.2"
+        "codeception/codeception": "^5.2",
+        "yiisoft/yii2-debug": "^2.1"
     },
     "license": "MIT",
     "autoload": {
@@ -27,6 +28,9 @@
             "url": "https://asset-packagist.org"
         }
     ],
+    "scripts": {
+        "serve": "php -S localhost:8081 -t tests/app/web"
+    },
     "minimum-stability": "stable",
     "config": {
         "allow-plugins": {
