@@ -1,0 +1,36 @@
+{
+    "name": "eseperio/yii2-command-palette",
+    "description": "A command palette widget for Yii2 projects",
+    "type": "library",
+    "require": {
+        "php": ">=8.0",
+        "yiisoft/yii2": "^2.0"
+    },
+    "require-dev": {
+        "codeception/codeception": "^5.2"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "eseperio\\commandPalette\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "E.Alamo",
+            "email": "erosdelalamo@gmail.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "minimum-stability": "stable",
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
+        }
+    }
+}

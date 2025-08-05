@@ -1,0 +1,13 @@
+
+reference.html
+vendor/
+# Ignore system files
+.idea
+*.sql
+*.log
+*.swp
+*.swo
+*.bak
+*.tmp
+*.cache
+*.pid
