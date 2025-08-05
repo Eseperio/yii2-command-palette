@@ -1,5 +1,4 @@
 import { defineConfig } from 'vite';
-import legacy from '@vitejs/plugin-legacy';
 import { resolve } from 'path';
 
 export default defineConfig({
@@ -17,38 +16,32 @@ export default defineConfig({
     // Generate source maps for debugging
     sourcemap: true,
     
+    // Configure library mode to bundle for non-module usage
+    lib: {
+      entry: resolve(__dirname, 'src/assets/src/js/palette.js'),
+      name: 'CommandPalette',
+      fileName: (format) => `js/palette.min.js`,
+      formats: ['iife']
+    },
+    
     // Configure the build to generate separate files for each entry point
     rollupOptions: {
-      input: {
-        // JavaScript entry point
-        'palette': resolve(__dirname, 'src/assets/src/js/palette.js'),
-      },
       output: {
-        // Configure output file names
-        entryFileNames: 'js/[name].min.js',
-        chunkFileNames: 'js/[name]-[hash].min.js',
+        // Configure output file names for assets
         assetFileNames: (assetInfo) => {
           // Put CSS files in the css directory
           if (assetInfo.name.endsWith('.css')) {
-            return 'css/[name].min.[ext]';
+            return 'css/palette.min.css';
           }
           // Put other assets in the assets directory
           return 'assets/[name]-[hash].[ext]';
-        },
-      },
+        }
+      }
     },
     
     // Minify the output for production
-    minify: true,
+    minify: true
   },
-  
-  // Configure plugins
-  plugins: [
-    // Add support for legacy browsers
-    legacy({
-      targets: ['defaults', 'not IE 11'],
-    }),
-  ],
   
   // Configure CSS processing
   css: {

@@ -120,10 +120,39 @@ if (window.commandPalette_w1) {
 
 ## Customizing the Appearance
 
-You can customize the appearance of the command palette by adding custom CSS to your application:
+### Using CSS Variables
+
+The command palette supports customization through CSS variables. You can set these variables in your own stylesheet to customize the appearance:
 
 ```css
-/* Custom command palette styles */
+/* Custom command palette styles using CSS variables */
+:root {
+  /* Primary colors */
+  --cmdk-primary-color: #3b82f6;       /* Primary color (buttons, icons, focus) */
+  --cmdk-background-color: #1e293b;    /* Background color of the panel */
+  
+  /* Element colors */
+  --cmdk-element-title-color: #f8fafc;  /* Color of item titles */
+  --cmdk-element-background-color: #334155; /* Background color for selected/hover items */
+  --cmdk-element-subtitle-color: #94a3b8; /* Color of item subtitles */
+  
+  /* Spacing */
+  --cmdk-element-padding: 12px 10px;    /* Padding for items */
+  --cmdk-element-margin: 0;             /* Margin for the list */
+  
+  /* Border radius */
+  --cmdk-border-radius: 8px;            /* Border radius for the panel */
+  --cmdk-element-border-radius: 6px;    /* Border radius for items */
+  --cmdk-input-border-radius: 6px;      /* Border radius for the search input */
+}
+```
+
+### Using Direct CSS Overrides
+
+You can also customize the appearance by directly overriding the CSS classes:
+
+```css
+/* Custom command palette styles with direct overrides */
 .cmdk-overlay {
     background: rgba(0, 0, 0, 0.7); /* Darker overlay */
 }

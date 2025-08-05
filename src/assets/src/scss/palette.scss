@@ -2,18 +2,39 @@
  * Command Palette styles
  */
 
-// Variables
+// CSS Custom Properties (Variables)
+:root {
+  // Primary colors
+  --cmdk-primary-color: #7c3aed;
+  --cmdk-background-color: #fff;
+  
+  // Element colors
+  --cmdk-element-title-color: #2e2e3a;
+  --cmdk-element-background-color: #f1eaff;
+  --cmdk-element-subtitle-color: #8b8b93;
+  
+  // Spacing
+  --cmdk-element-padding: 10px 8px;
+  --cmdk-element-margin: 0;
+  
+  // Border radius
+  --cmdk-border-radius: 16px;
+  --cmdk-element-border-radius: 9px;
+  --cmdk-input-border-radius: 8px;
+}
+
+// SCSS Variables (with fallbacks to CSS variables)
 $cmdk-overlay-bg: rgba(0, 0, 0, 0.30);
-$cmdk-panel-bg: #fff;
+$cmdk-panel-bg: var(--cmdk-background-color, #fff);
 $cmdk-panel-shadow: 0 6px 32px rgba(0, 0, 0, 0.16), 0 1.5px 4px rgba(0, 0, 0, 0.06);
 $cmdk-search-bg: #f6f6f7;
 $cmdk-search-border: #e3e3e3;
-$cmdk-search-focus-border: #7c3aed;
-$cmdk-item-hover-bg: #f1eaff;
-$cmdk-icon-color: #7c3aed;
-$cmdk-title-color: #2e2e3a;
-$cmdk-subtitle-color: #8b8b93;
-$cmdk-no-results-color: #8b8b93;
+$cmdk-search-focus-border: var(--cmdk-primary-color, #7c3aed);
+$cmdk-item-hover-bg: var(--cmdk-element-background-color, #f1eaff);
+$cmdk-icon-color: var(--cmdk-primary-color, #7c3aed);
+$cmdk-title-color: var(--cmdk-element-title-color, #2e2e3a);
+$cmdk-subtitle-color: var(--cmdk-element-subtitle-color, #8b8b93);
+$cmdk-no-results-color: var(--cmdk-element-subtitle-color, #8b8b93);
 
 // Overlay
 .cmdk-overlay {
@@ -32,7 +53,7 @@ $cmdk-no-results-color: #8b8b93;
   transform: translate(-50%, -50%);
   width: 420px;
   background: $cmdk-panel-bg;
-  border-radius: 16px;
+  border-radius: var(--cmdk-border-radius, 16px);
   box-shadow: $cmdk-panel-shadow;
   z-index: 9999;
   display: flex;
@@ -52,7 +73,7 @@ $cmdk-no-results-color: #8b8b93;
   width: 100%;
   font-size: 1.1em;
   padding: 10px 12px;
-  border-radius: 8px;
+  border-radius: var(--cmdk-input-border-radius, 8px);
   border: 1px solid $cmdk-search-border;
   outline: none;
   background: $cmdk-search-bg;
@@ -70,7 +91,7 @@ $cmdk-no-results-color: #8b8b93;
 .cmdk-list {
   flex: 1 1 auto;
   overflow-y: auto;
-  margin: 0;
+  margin: var(--cmdk-element-margin, 0);
   padding: 0;
   list-style: none;
   max-height: 50vh;
@@ -81,8 +102,8 @@ $cmdk-no-results-color: #8b8b93;
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  padding: 10px 8px;
-  border-radius: 9px;
+  padding: var(--cmdk-element-padding, 10px 8px);
+  border-radius: var(--cmdk-element-border-radius, 9px);
   cursor: pointer;
   user-select: none;
   transition: background 0.12s;
