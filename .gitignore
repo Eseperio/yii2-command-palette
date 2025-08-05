@@ -7,8 +7,8 @@ node_modules/
 /src/assets/dist/
 
 # Test environment
-/tests/app/runtime/
-/tests/app/web/assets/
+/tests/app/runtime/*
+/tests/app/web/assets/*
 
 # Reference files
 reference.html
