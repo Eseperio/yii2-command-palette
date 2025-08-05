@@ -4,7 +4,7 @@
     "type": "library",
     "require": {
         "php": ">=8.0",
-        "yiisoft/yii2": "^2.0",
+        "yiisoft/yii2": "^2.0"
     },
     "require-dev": {
         "codeception/codeception": "^5.2",

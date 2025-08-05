@@ -17,7 +17,7 @@ $config = [
         'assetManager' => [
             'linkAssets' => true,
             'appendTimestamp' => true,
-            'basePath' => __DIR__ . '/../assets',
+            'basePath' => __DIR__ . '/../web/assets',
         ],
         'request' => [
             'cookieValidationKey' => 'test-command-palette-widget',
