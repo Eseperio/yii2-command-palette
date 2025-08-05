@@ -107,8 +107,7 @@ $cmdk-no-results-color: var(--cmdk-element-subtitle-color, #8b8b93);
   cursor: pointer;
   user-select: none;
   transition: background 0.12s;
-  min-height: 40px;
-  
+
   &.selected,
   &:hover {
     background: $cmdk-item-hover-bg;
