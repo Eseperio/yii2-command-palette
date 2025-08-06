@@ -6,10 +6,11 @@ A widget to add a command palette to your Yii2 application, similar to the ones 
 
 ## Features
 
-- 🚀 Keyboard-driven interface (Ctrl+K / Cmd+K to open)
+- 🚀 Keyboard-driven interface (Ctrl+K / Cmd+K to open by default, customizable)
 - 🔍 Fuzzy search with Levenshtein distance algorithm
 - ⌨️ Full keyboard navigation (arrow keys, enter, escape)
-- 🎨 Customizable appearance
+- 🎨 Customizable appearance with multiple themes (default, dark, modern)
+- 🌐 Internationalization support for 10 languages
 - 🧩 Multiple palettes on the same page
 - 📱 Responsive design
 - 🔗 Support for URLs and JavaScript actions
@@ -222,6 +223,77 @@ echo CommandPaletteWidget::widget([
 
 Each command palette will have a unique ID and can be opened independently.
 
+### Language Support
+
+The command palette supports 10 languages: English (default), Spanish, French, German, Italian, Portuguese, Russian, Chinese (Simplified), Japanese, and Arabic.
+
+You can specify the locale when initializing the widget:
+
+```php
+echo CommandPaletteWidget::widget([
+    'locale' => 'es', // Spanish
+    'items' => [
+        // Items
+    ],
+]);
+```
+
+The locale affects the placeholder text in the search input and the "No results" message.
+
+### Theme Support
+
+The command palette comes with three built-in themes:
+
+- `default`: Light theme with purple accents
+- `dark`: Dark theme with purple accents
+- `modern`: Light theme with blue accents and modern styling
+
+You can specify the theme when initializing the widget:
+
+```php
+echo CommandPaletteWidget::widget([
+    'theme' => 'dark', // Use the dark theme
+    'items' => [
+        // Items
+    ],
+]);
+```
+
+### Customizing Keyboard Shortcuts
+
+By default, the command palette opens with Ctrl+K (Windows/Linux) or Cmd+K (Mac). You can customize this shortcut by specifying the `keyboardShortcuts` parameter:
+
+```php
+echo CommandPaletteWidget::widget([
+    'keyboardShortcuts' => ['p', 'P'], // Open with Ctrl+P or Cmd+P
+    'items' => [
+        // Items
+    ],
+]);
+```
+
+You can specify multiple keys to create multiple shortcuts:
+
+```php
+echo CommandPaletteWidget::widget([
+    'keyboardShortcuts' => ['k', 'p'], // Open with Ctrl+K, Cmd+K, Ctrl+P, or Cmd+P
+    'items' => [
+        // Items
+    ],
+]);
+```
+
+If you don't want any keyboard shortcuts, you can set it to an empty array:
+
+```php
+echo CommandPaletteWidget::widget([
+    'keyboardShortcuts' => [], // No keyboard shortcuts
+    'items' => [
+        // Items
+    ],
+]);
+```
+
 ## Development and Testing
 
 The package includes a test application that demonstrates the usage of the command palette widget. You can run this application using the built-in PHP server:
@@ -237,17 +309,6 @@ The test application includes several examples:
 - Multiple command palettes on the same page
 - Custom styled command palette
 
-## Troubleshooting
-
-### Failed to instantiate component or class "yii\debug\Module"
-
-If you encounter this error when running the test application, it means that the Yii2 debug module is configured but not installed. To resolve this issue, install the yii2-debug package:
-
-```bash
-composer require --dev yiisoft/yii2-debug
-```
-
-This error occurs because the test application's configuration includes the debug module for development environments, but the package is not included in the default dependencies.
 
 ## License
 
