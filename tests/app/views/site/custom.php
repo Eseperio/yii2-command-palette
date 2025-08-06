@@ -10,13 +10,15 @@ $this->title = 'Command Palette Widget - Custom Styling';
 <div class="site-custom">
     <div class="body-content">
         <h2>Custom Styled Command Palette</h2>
-        
-        <p>Este ejemplo demuestra cómo personalizar la apariencia de la paleta de comandos usando variables CSS nativas (custom properties).</p>
+
+        <p>Este ejemplo demuestra cómo personalizar la apariencia de la paleta de comandos usando variables CSS nativas
+            (custom properties).</p>
 
         <div class="demo-section card my-4">
             <div class="card-body">
                 <h3 class="card-title">Custom CSS con variables nativas</h3>
-                <p>Puedes personalizar la apariencia de la paleta de comandos sobrescribiendo las variables CSS en tu aplicación.</p>
+                <p>Puedes personalizar la apariencia de la paleta de comandos sobrescribiendo las variables CSS en tu
+                    aplicación.</p>
                 <pre class="bg-light p-3 rounded"><code>
 :root {
     --cmdk-background-color: #1e293b;
@@ -31,7 +33,7 @@ $this->title = 'Command Palette Widget - Custom Styling';
                 </code></pre>
             </div>
         </div>
-        
+
         <div class="demo-section card my-4">
             <div class="card-body">
                 <h3 class="card-title">Live Demo</h3>
@@ -66,6 +68,7 @@ $this->registerCss($css);
 
 // Renderizar el widget sin clases personalizadas pero con locale español
 echo CommandPaletteWidget::widget([
+    'theme' => CommandPaletteWidget::THEME_CUSTOM, // Usar tema personalizado
     'items' => [
         [
             'icon' => '🚀',

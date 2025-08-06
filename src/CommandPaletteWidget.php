@@ -15,6 +15,11 @@ use yii\helpers\Json;
  */
 class CommandPaletteWidget extends Widget
 {
+    // Constantes para los temas
+    const THEME_DEFAULT = 'default';
+    const THEME_DARK = 'dark';
+    const THEME_CUSTOM = 'custom';
+
     /**
      * @var array Items to be displayed in the command palette.
      * Each item should have the following structure:
@@ -36,6 +41,11 @@ class CommandPaletteWidget extends Widget
      * @var string The ID of the widget
      */
     private $_id;
+
+    /**
+     * @var string Tema del widget. Puede ser 'default' o 'dark'.
+     */
+    public $theme = self::THEME_DEFAULT;
 
     /**
      * {@inheritdoc}
@@ -63,6 +73,7 @@ class CommandPaletteWidget extends Widget
             'items' => $this->items,
             'itemsJson' => Json::encode($this->items),
             'locale' => $locale,
+            'theme' => $this->theme, // Pasar el tema a la vista
         ]);
     }
 

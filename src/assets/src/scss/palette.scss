@@ -164,3 +164,6 @@ $cmdk-no-results-color: var(--cmdk-element-subtitle-color, #8b8b93);
     min-width: 0;
   }
 }
+
+@import './_theme-default.scss';
+@import './_theme-dark.scss';
