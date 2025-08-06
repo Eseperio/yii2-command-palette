@@ -43,6 +43,12 @@ class WidgetTest extends Unit
         $this->assertStringContainsString('cmdk-search', $output);
         $this->assertStringContainsString('cmdk-list', $output);
         
+        // Verify that the template is included in the widget output
+        $this->assertStringContainsString('<template id="cmdkItemTemplate-', $output);
+        $this->assertStringContainsString('{{name}}', $output);
+        $this->assertStringContainsString('{{#icon}}', $output);
+        $this->assertStringContainsString('{{#subtitle}}', $output);
+        
         // Verify that the items are passed to JavaScript
         $this->assertStringContainsString('window.cmdkItems_', $output);
     }
@@ -82,5 +88,41 @@ class WidgetTest extends Unit
         
         // Verify that the widgets have different IDs
         $this->assertNotEquals($output1, $output2);
+    }
+    
+    /**
+     * Test that the widget accepts a locale parameter
+     */
+    public function testLocaleParameter()
+    {
+        $view = new View();
+        
+        // Test with default locale
+        $output1 = CommandPaletteWidget::widget([
+            'items' => [],
+        ]);
+        
+        // Test with specific locale
+        $output2 = CommandPaletteWidget::widget([
+            'items' => [],
+            'locale' => 'es',
+        ]);
+        
+        // Verify that the locale is passed to JavaScript
+        // The placeholder is no longer in the HTML, so we can't test for it directly
+        // Instead, we'll check that the widget renders without errors
+        $this->assertStringContainsString('cmdk-search', $output2);
+        
+        // Test with another locale
+        $widget = new CommandPaletteWidget([
+            'items' => [],
+            'locale' => 'fr',
+        ]);
+        
+        $widget->view = $view;
+        $widget->run();
+        
+        // Verify that the asset is registered
+        $this->assertArrayHasKey('eseperio\\commandPalette\\assets\\CommandPaletteAsset', $view->assetBundles);
     }
 }

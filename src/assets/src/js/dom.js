@@ -2,63 +2,113 @@
  * DOM handling helpers for the command palette
  */
 
+import { getTranslation } from './i18n.js';
+
 /**
  * Renders a list of items in the command palette
  * @param {HTMLElement} listElement - The list element to render items in
  * @param {Array} items - The items to render
  * @param {number} selectedIdx - The index of the selected item
+ * @param {string} locale - The locale for translations
  * @returns {void}
  */
-export function renderList(listElement, items, selectedIdx = 0) {
+export function renderList(listElement, items, selectedIdx = 0, locale = 'en') {
+    // Store the previously selected item index
+    const prevSelectedIdx = listElement.getAttribute('data-selected-idx');
+    
+    // If this is just a selection change and the list is already populated
+    if (listElement.children.length > 0 && items.length > 0 && prevSelectedIdx !== null) {
+        // Update only the selection state
+        const prevSelected = listElement.querySelector(`.cmdk-item[data-idx="${prevSelectedIdx}"]`);
+        const newSelected = listElement.querySelector(`.cmdk-item[data-idx="${selectedIdx}"]`);
+        
+        if (prevSelected) {
+            prevSelected.classList.remove('selected');
+        }
+        
+        if (newSelected) {
+            newSelected.classList.add('selected');
+            // Update the stored selected index
+            listElement.setAttribute('data-selected-idx', selectedIdx);
+            return;
+        }
+    }
+    
+    // If we need to do a full render (first render or items changed)
     listElement.innerHTML = '';
     
     if (items.length === 0) {
-        listElement.innerHTML = `<li style="padding: 16px; color: #8b8b93;">No results</li>`;
+        const noResultsText = getTranslation('noResults', locale);
+        listElement.innerHTML = `<li style="padding: 16px; color: #8b8b93;">${noResultsText}</li>`;
         return;
     }
     
+    // Get the template ID from the list element ID
+    const id = listElement.id.replace('cmdkList-', '');
+    const templateElement = document.getElementById(`cmdkItemTemplate-${id}`);
+    
+    if (!templateElement) {
+        console.error(`Template element not found: cmdkItemTemplate-${id}`);
+        return;
+    }
+    
+    const templateContent = templateElement.innerHTML;
+    
+    // Create a document fragment to improve performance
+    const fragment = document.createDocumentFragment();
+    
     items.forEach((item, idx) => {
-        const li = document.createElement('li');
-        li.className = 'cmdk-item' + (idx === selectedIdx ? ' selected' : '');
-        li.tabIndex = -1;
-        li.setAttribute('data-idx', idx);
-
+        // Create a new item from the template
+        let itemHtml = templateContent;
+        
+        // Replace placeholders with actual values
+        itemHtml = itemHtml.replace(/{{idx}}/g, idx);
+        itemHtml = itemHtml.replace(/{{name}}/g, item.name || '');
+        
+        // Handle icon
         if (item.icon) {
-            let iconElem;
             // Check if the icon is a URL
             if (typeof item.icon === 'string' && item.icon.match(/^https?:\/\//)) {
-                iconElem = document.createElement('img');
-                iconElem.src = item.icon;
-                iconElem.className = 'cmdk-icon';
-                iconElem.style.width = '22px';
-                iconElem.style.height = '22px';
-                iconElem.style.objectFit = 'cover';
+                // Replace the icon placeholder with an img tag
+                itemHtml = itemHtml.replace(/{{#icon}}([\s\S]*?){{\/icon}}/g, 
+                    `<img src="${item.icon}" class="cmdk-icon" style="width: 22px; height: 22px; object-fit: cover;">`);
             } else {
-                iconElem = document.createElement('span');
-                iconElem.className = 'cmdk-icon';
-                iconElem.textContent = item.icon;
+                // Replace the icon content
+                itemHtml = itemHtml.replace(/{{icon}}/g, item.icon);
+                // Keep the icon block
+                itemHtml = itemHtml.replace(/{{#icon}}([\s\S]*?){{\/icon}}/g, '$1');
             }
-            li.appendChild(iconElem);
+        } else {
+            // Remove the icon block
+            itemHtml = itemHtml.replace(/{{#icon}}[\s\S]*?{{\/icon}}/g, '');
         }
         
-        const content = document.createElement('div');
-        content.className = 'cmdk-content';
-
-        const title = document.createElement('span');
-        title.className = 'cmdk-title';
-        title.textContent = item.name;
-        content.appendChild(title);
-
+        // Handle subtitle
         if (item.subtitle) {
-            const subtitle = document.createElement('span');
-            subtitle.className = 'cmdk-subtitle';
-            subtitle.textContent = item.subtitle;
-            content.appendChild(subtitle);
+            itemHtml = itemHtml.replace(/{{subtitle}}/g, item.subtitle);
+            itemHtml = itemHtml.replace(/{{#subtitle}}([\s\S]*?){{\/subtitle}}/g, '$1');
+        } else {
+            itemHtml = itemHtml.replace(/{{#subtitle}}[\s\S]*?{{\/subtitle}}/g, '');
         }
-
-        li.appendChild(content);
-        listElement.appendChild(li);
+        
+        // Create a temporary element to hold the HTML
+        const temp = document.createElement('div');
+        temp.innerHTML = itemHtml;
+        const li = temp.firstElementChild;
+        
+        // Add selected class if this is the selected item
+        if (idx === selectedIdx) {
+            li.classList.add('selected');
+        }
+        
+        fragment.appendChild(li);
     });
+    
+    // Append all items at once
+    listElement.appendChild(fragment);
+    
+    // Store the selected index as a data attribute
+    listElement.setAttribute('data-selected-idx', selectedIdx);
 }
 
 /**

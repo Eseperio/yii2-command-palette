@@ -11,6 +11,7 @@ use yii\helpers\Json;
  * CommandPaletteWidget is a Yii2 widget that provides a floating command palette with fuzzy search.
  *
  * @property array $items Items to be displayed in the command palette
+ * @property string $locale Locale for translations
  */
 class CommandPaletteWidget extends Widget
 {
@@ -25,6 +26,11 @@ class CommandPaletteWidget extends Widget
      * ]
      */
     public $items = [];
+    
+    /**
+     * @var string Locale for translations. If null, the application locale will be used.
+     */
+    public $locale = null;
 
     /**
      * @var string The ID of the widget
@@ -47,10 +53,16 @@ class CommandPaletteWidget extends Widget
     {
         $this->registerAssets();
         
+        // Use application locale if not specified
+        $locale = $this->locale ?: \Yii::$app->language;
+        // Extract just the language code if it contains a country code (e.g., 'en-US' -> 'en')
+        $locale = strtolower(substr($locale, 0, 2));
+        
         return $this->render('widget', [
             'id' => $this->_id,
             'items' => $this->items,
             'itemsJson' => Json::encode($this->items),
+            'locale' => $locale,
         ]);
     }
 
@@ -62,8 +74,13 @@ class CommandPaletteWidget extends Widget
         $view = $this->getView();
         $asset = CommandPaletteAsset::register($view);
         
-        // Initialize the command palette with the items
-        $js = "window.commandPalette_{$this->_id} = new CommandPalette('{$this->_id}', " . Json::encode($this->items) . ");";
+        // Use application locale if not specified
+        $locale = $this->locale ?: \Yii::$app->language;
+        // Extract just the language code if it contains a country code (e.g., 'en-US' -> 'en')
+        $locale = strtolower(substr($locale, 0, 2));
+        
+        // Initialize the command palette with the items and locale
+        $js = "window.commandPalette_{$this->_id} = new CommandPalette('{$this->_id}', " . Json::encode($this->items) . ", '{$locale}');";
         $view->registerJs($js);
     }
 }

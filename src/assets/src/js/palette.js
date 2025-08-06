@@ -4,6 +4,7 @@
 
 import { filterItems } from './fuzzy.js';
 import { renderList, scrollToSelected, executeItemAction, setupEventListeners } from './dom.js';
+import { getTranslation, getTranslations } from './i18n.js';
 
 // Import SCSS for Vite to process
 import '../scss/palette.scss';
@@ -16,13 +17,15 @@ class CommandPalette {
      * Constructor
      * @param {string} id - The ID of the command palette
      * @param {Array} items - The items to display in the command palette
+     * @param {string} locale - The locale for translations
      */
-    constructor(id, items = []) {
+    constructor(id, items = [], locale = 'en') {
         this.id = id;
         this.items = items;
         this.filtered = [...items];
         this.selectedIdx = 0;
         this.isOpen = false;
+        this.locale = locale;
         
         // Get DOM elements
         this.elements = {
@@ -31,6 +34,11 @@ class CommandPalette {
             search: document.getElementById(`cmdkSearch-${id}`),
             list: document.getElementById(`cmdkList-${id}`)
         };
+        
+        // Set placeholder text based on locale
+        if (this.elements.search) {
+            this.elements.search.placeholder = getTranslation('search', this.locale);
+        }
         
         // Initialize
         this.init();
@@ -54,7 +62,7 @@ class CommandPalette {
         });
         
         // Initial render
-        renderList(this.elements.list, this.filtered, this.selectedIdx);
+        renderList(this.elements.list, this.filtered, this.selectedIdx, this.locale);
     }
     
     /**
@@ -74,7 +82,7 @@ class CommandPalette {
         this.filtered = [...this.items];
         this.selectedIdx = 0;
         
-        renderList(this.elements.list, this.filtered, this.selectedIdx);
+        renderList(this.elements.list, this.filtered, this.selectedIdx, this.locale);
     }
     
     /**
@@ -95,7 +103,7 @@ class CommandPalette {
     handleSearch(e) {
         this.filtered = filterItems(e.target.value.trim(), this.items);
         this.selectedIdx = 0;
-        renderList(this.elements.list, this.filtered, this.selectedIdx);
+        renderList(this.elements.list, this.filtered, this.selectedIdx, this.locale);
     }
     
     /**
@@ -107,12 +115,12 @@ class CommandPalette {
         if (e.key === 'ArrowDown') {
             e.preventDefault();
             this.selectedIdx = (this.selectedIdx + 1) % this.filtered.length;
-            renderList(this.elements.list, this.filtered, this.selectedIdx);
+            renderList(this.elements.list, this.filtered, this.selectedIdx, this.locale);
             scrollToSelected(this.elements.list);
         } else if (e.key === 'ArrowUp') {
             e.preventDefault();
             this.selectedIdx = (this.selectedIdx - 1 + this.filtered.length) % this.filtered.length;
-            renderList(this.elements.list, this.filtered, this.selectedIdx);
+            renderList(this.elements.list, this.filtered, this.selectedIdx, this.locale);
             scrollToSelected(this.elements.list);
         } else if (e.key === 'Enter') {
             e.preventDefault();
@@ -168,7 +176,7 @@ class CommandPalette {
     handleItemHover(idx) {
         if (idx !== this.selectedIdx) {
             this.selectedIdx = idx;
-            renderList(this.elements.list, this.filtered, this.selectedIdx);
+            renderList(this.elements.list, this.filtered, this.selectedIdx, this.locale);
         }
     }
     

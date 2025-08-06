@@ -13,9 +13,10 @@ $this->title = 'Command Palette Widget - Basic Example';
         
         <p>This is a basic example of the Command Palette Widget. Press <kbd>Ctrl</kbd>+<kbd>K</kbd> (or <kbd>⌘</kbd>+<kbd>K</kbd> on Mac) to open the command palette.</p>
         
-        <div class="demo-section">
-            <h3>Widget Configuration</h3>
-            <pre><code>
+        <div class="demo-section card my-4">
+            <div class="card-body">
+                <h3 class="card-title">Widget Configuration</h3>
+                <pre class="bg-light p-3 rounded"><code>
 echo CommandPaletteWidget::widget([
     'items' => [
         [
@@ -44,19 +45,22 @@ echo CommandPaletteWidget::widget([
         ],
     ],
 ]);
-            </code></pre>
+                </code></pre>
+            </div>
         </div>
         
-        <div class="demo-section">
-            <h3>Live Demo</h3>
-            <p>Click the button below or use the keyboard shortcut to open the command palette.</p>
-            <button id="openPalette" style="padding: 8px 16px; background-color: #7c3aed; color: white; border: none; border-radius: 4px; cursor: pointer;">Open Command Palette</button>
+        <div class="demo-section card my-4">
+            <div class="card-body">
+                <h3 class="card-title">Live Demo</h3>
+                <p>Click the button below or use the keyboard shortcut to open the command palette.</p>
+                <button id="openPalette" class="btn btn-primary">Open Command Palette</button>
+            </div>
         </div>
     </div>
 </div>
 
 <?php
-// Render the command palette widget
+// Render the command palette widget with French locale
 echo CommandPaletteWidget::widget([
     'items' => [
         [
@@ -84,6 +88,7 @@ echo CommandPaletteWidget::widget([
             'action' => 'javascript:alert("Settings")',
         ],
     ],
+    'locale' => 'fr', // Use French locale
 ]);
 ?>
 

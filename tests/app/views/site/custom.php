@@ -13,10 +13,11 @@ $this->title = 'Command Palette Widget - Custom Styling';
         
         <p>Este ejemplo demuestra cómo personalizar la apariencia de la paleta de comandos usando variables CSS nativas (custom properties).</p>
 
-        <div class="demo-section">
-            <h3>Custom CSS con variables nativas</h3>
-            <p>Puedes personalizar la apariencia de la paleta de comandos sobrescribiendo las variables CSS en tu aplicación.</p>
-            <pre><code>
+        <div class="demo-section card my-4">
+            <div class="card-body">
+                <h3 class="card-title">Custom CSS con variables nativas</h3>
+                <p>Puedes personalizar la apariencia de la paleta de comandos sobrescribiendo las variables CSS en tu aplicación.</p>
+                <pre class="bg-light p-3 rounded"><code>
 :root {
     --cmdk-background-color: #1e293b;
     --cmdk-primary-color: #3b82f6;
@@ -27,13 +28,16 @@ $this->title = 'Command Palette Widget - Custom Styling';
     --cmdk-element-border-radius: 8px;
     --cmdk-input-border-radius: 6px;
 }
-            </code></pre>
+                </code></pre>
+            </div>
         </div>
         
-        <div class="demo-section">
-            <h3>Live Demo</h3>
-            <p>Haz clic en el botón para abrir la paleta de comandos personalizada.</p>
-            <button id="openCustomPalette" style="padding: 8px 16px; background-color: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;">Open Custom Palette</button>
+        <div class="demo-section card my-4">
+            <div class="card-body">
+                <h3 class="card-title">Live Demo</h3>
+                <p>Haz clic en el botón para abrir la paleta de comandos personalizada.</p>
+                <button id="openCustomPalette" class="btn btn-primary">Open Custom Palette</button>
+            </div>
         </div>
     </div>
 </div>
@@ -60,7 +64,7 @@ $css = <<<CSS
 CSS;
 $this->registerCss($css);
 
-// Renderizar el widget sin clases personalizadas
+// Renderizar el widget sin clases personalizadas pero con locale español
 echo CommandPaletteWidget::widget([
     'items' => [
         [
@@ -88,6 +92,7 @@ echo CommandPaletteWidget::widget([
             'action' => 'javascript:alert("Configuration")',
         ],
     ],
+    'locale' => 'es', // Usar locale español
 ]);
 ?>
 
