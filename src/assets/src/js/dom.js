@@ -16,8 +16,13 @@ export function renderList(listElement, items, selectedIdx = 0, locale = 'en') {
     // Store the previously selected item index
     const prevSelectedIdx = listElement.getAttribute('data-selected-idx');
     
-    // If this is just a selection change and the list is already populated
-    if (listElement.children.length > 0 && items.length > 0 && prevSelectedIdx !== null) {
+    // Get the current items count from the list
+    const currentItemsCount = listElement.querySelectorAll('.cmdk-item').length;
+    
+    // If this is just a selection change and the list is already populated with the same number of items
+    // This ensures we do a full redraw when search results change (different number of items)
+    if (listElement.children.length > 0 && items.length > 0 && 
+        items.length === currentItemsCount && prevSelectedIdx !== null) {
         // Update only the selection state
         const prevSelected = listElement.querySelector(`.cmdk-item[data-idx="${prevSelectedIdx}"]`);
         const newSelected = listElement.querySelector(`.cmdk-item[data-idx="${selectedIdx}"]`);
