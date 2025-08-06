@@ -11,16 +11,16 @@
 export function fuzzyMinLevenshtein(query, text) {
     if (!query || !text) return Infinity;
     let minDist = Infinity;
-    
+
     // Search in all substrings of the same length as the query
     for (let i = 0; i <= text.length - query.length; i++) {
         const substr = text.substr(i, query.length);
         minDist = Math.min(minDist, levenshtein(query, substr));
     }
-    
+
     // Also compare with the full text (in case the query is longer than the text)
     minDist = Math.min(minDist, levenshtein(query, text));
-    
+
     return minDist;
 }
 
@@ -32,14 +32,14 @@ export function fuzzyMinLevenshtein(query, text) {
  */
 export function levenshtein(a, b) {
     const m = a.length, n = b.length;
-    
+
     if (m === 0) return n;
     if (n === 0) return m;
-    
+
     const dp = [];
     for (let i = 0; i <= m; i++) dp[i] = [i];
     for (let j = 1; j <= n; j++) dp[0][j] = j;
-    
+
     for (let i = 1; i <= m; i++) {
         for (let j = 1; j <= n; j++) {
             const cost = a[i - 1].toLowerCase() === b[j - 1].toLowerCase() ? 0 : 1;
@@ -50,7 +50,7 @@ export function levenshtein(a, b) {
             );
         }
     }
-    
+
     return dp[m][n];
 }
 
@@ -65,6 +65,19 @@ export function filterItems(query, items) {
 
     query = query.trim().toLowerCase();
 
+    // Solo coincidencias completas (substring) si <= 3 caracteres
+    let exactMatches =  items.filter(item => {
+        const name = item.name.toLowerCase();
+        const subtitle = item.subtitle ? item.subtitle.toLowerCase() : '';
+        return name.includes(query) || subtitle.includes(query);
+    });
+
+    if(exactMatches.length > 0) {
+        // Si hay coincidencias exactas y la consulta es corta, devolver solo esas
+        return exactMatches;
+    }
+
+    // Búsqueda difusa si > 3 caracteres
     return items
         .map(item => {
             const name = item.name.toLowerCase();
@@ -74,7 +87,7 @@ export function filterItems(query, items) {
             const score = Math.min(distName, distSubtitle);
 
             const substringMatch = name.includes(query) || subtitle.includes(query);
-            return { ...item, _score: score, _substringMatch: substringMatch };
+            return {...item, _score: score, _substringMatch: substringMatch};
         })
         .sort((a, b) => {
             if (a._substringMatch && !b._substringMatch) return -1;
