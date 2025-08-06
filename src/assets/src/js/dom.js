@@ -169,6 +169,8 @@ export function setupEventListeners(elements, callbacks) {
     // List events
     if (list && onItemClick) {
         list.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             const item = e.target.closest('.cmdk-item');
             if (item) {
                 const idx = parseInt(item.getAttribute('data-idx'), 10);

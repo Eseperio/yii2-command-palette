@@ -83,20 +83,26 @@ You can specify a URL as the action, and the user will be redirected to that URL
 
 ### JavaScript Actions
 
-You can also specify a JavaScript function as the action:
+You can specify a JavaScript function as the action using Yii2's JsExpression:
 
 ```php
-'action' => 'javascript:alert("Hello, world!")',
+use yii\web\JsExpression;
+
+'action' => new JsExpression('function() { alert("Hello, world!"); }'),
 ```
 
 Or use a more complex function:
 
 ```php
-'action' => 'javascript:function() { 
+use yii\web\JsExpression;
+
+'action' => new JsExpression('function() { 
     console.log("Item selected"); 
     window.location.href = "/profile"; 
-}',
+}'),
 ```
+
+This approach ensures that the JavaScript code is properly encoded and executed when the item is selected.
 
 ## Opening the Command Palette Programmatically
 

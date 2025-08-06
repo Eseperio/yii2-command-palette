@@ -27,8 +27,11 @@ class CommandPaletteWidget extends Widget
      *     'icon' => '🔍', // Emoji or URL to an image
      *     'name' => 'Search on Google', // Item name
      *     'subtitle' => 'Open Google in a new tab', // Optional subtitle
-     *     'action' => 'function' // Function or URL
+     *     'action' => 'function' // Function, URL or JsExpression
      * ]
+     * 
+     * For JavaScript actions, use \yii\web\JsExpression:
+     * 'action' => new \yii\web\JsExpression('function() { alert("Hello!"); }')
      */
     public $items = [];
     

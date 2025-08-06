@@ -1,7 +1,8 @@
 /**
  * Command Palette styles
  */
-
+@use './_theme-default.scss';
+@use './_theme-dark.scss';
 // CSS Custom Properties (Variables)
 :root {
   // Primary colors
@@ -108,8 +109,7 @@ $cmdk-no-results-color: var(--cmdk-element-subtitle-color, #8b8b93);
   user-select: none;
   transition: background 0.12s;
 
-  &.selected,
-  &:hover {
+  &.selected{
     background: $cmdk-item-hover-bg;
   }
 }
@@ -165,5 +165,4 @@ $cmdk-no-results-color: var(--cmdk-element-subtitle-color, #8b8b93);
   }
 }
 
-@import './_theme-default.scss';
-@import './_theme-dark.scss';
+

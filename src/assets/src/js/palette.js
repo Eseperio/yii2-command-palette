@@ -26,7 +26,8 @@ class CommandPalette {
         this.selectedIdx = 0;
         this.isOpen = false;
         this.locale = locale;
-        
+
+        console.log(items)
         // Get DOM elements
         this.elements = {
             overlay: document.getElementById(`cmdkOverlay-${id}`),
@@ -152,9 +153,12 @@ class CommandPalette {
      * @returns {void}
      */
     handlePanelBlur(e) {
-        if (!this.elements.panel.contains(document.activeElement)) {
-            this.close();
-        }
+        // Espera brevemente antes de cerrar, para permitir que el click procese la acción
+        setTimeout(() => {
+            if (!this.elements.panel.contains(document.activeElement)) {
+                this.close();
+            }
+        }, 10);
     }
     
     /**
@@ -188,9 +192,8 @@ class CommandPalette {
     selectItem(idx) {
         const item = this.filtered[idx];
         if (!item) return;
-        
-        this.close();
-        executeItemAction(item);
+        executeItemAction(item); // Ejecuta la acción primero
+        this.close();            // Luego cierra el panel
     }
 }
 

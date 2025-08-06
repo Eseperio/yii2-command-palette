@@ -85,7 +85,7 @@ echo CommandPaletteWidget::widget([
             'icon' => '⚙️',
             'name' => 'Settings',
             'subtitle' => 'Application settings',
-            'action' => 'javascript:alert("Settings")',
+            'action' => new \yii\web\JsExpression('function() { alert("Settings"); }'),
         ],
     ],
     'locale' => 'fr', // Use French locale
