@@ -1,0 +1,44 @@
+.cmdk-theme-modern {
+  /**
+   * Tema moderno para Command Palette
+   */
+  --cmdk-font-size-base: 0.93em;
+  --cmdk-font-size-search: 0.97em;
+  --cmdk-font-size-title: 0.93em;
+  --cmdk-font-size-subtitle: 0.85em;
+  --cmdk-font-size-icon: 1em;
+
+  --cmdk-primary-color: #2563eb;
+  --cmdk-background-color: #f9fafb;
+  --cmdk-element-title-color: #1e293b;
+  --cmdk-element-background-color: #e0e7ef;
+  --cmdk-element-subtitle-color: #64748b;
+
+  --cmdk-border-radius: 10px;
+  --cmdk-element-border-radius: 6px;
+  --cmdk-input-border-radius: 6px;
+  --cmdk-element-padding: 8px 6px;
+
+  .cmdk-panel {
+    box-shadow: 0 2px 16px rgba(30, 41, 59, 0.10);
+    border: 1px solid #e5e7eb;
+    background: var(--cmdk-background-color, #f9fafb);
+  }
+
+  .cmdk-search {
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+  }
+
+  .cmdk-item.selected {
+    background: #dbeafe;
+  }
+
+  .cmdk-title {
+    font-weight: 600;
+  }
+
+  .cmdk-icon {
+    color: var(--cmdk-primary-color, #2563eb);
+  }
+}

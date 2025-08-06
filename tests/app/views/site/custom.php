@@ -47,7 +47,7 @@ $this->title = 'Command Palette Widget - Custom Styling';
 <?php
 // Registrar CSS usando variables nativas
 $css = <<<CSS
-:root {
+.cmdk-main.cmdk-theme-custom {
     --cmdk-background-color: #1e293b;
     --cmdk-primary-color: #3b82f6;
     --cmdk-element-title-color: #f8fafc;
