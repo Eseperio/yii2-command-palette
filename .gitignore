@@ -3,8 +3,6 @@
 vendor/
 node_modules/
 
-# Generated files
-/src/assets/dist/
 
 # Test environment
 /tests/app/runtime/*
