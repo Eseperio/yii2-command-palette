@@ -2,7 +2,7 @@
 
 A widget to add a command palette to your Yii2 application, similar to the ones in VSCode, GitHub, and other modern applications. The command palette provides a quick way to access commands and navigate through your application using keyboard shortcuts.
 
-![Command Palette Demo](https://via.placeholder.com/800x450.png?text=Command+Palette+Demo)
+![Command Palette Demo](img.png)
 
 ## Features
 
