@@ -27,7 +27,8 @@ class CommandPaletteWidget extends Widget
      *     'icon' => '🔍', // Emoji, URL to an image, or HTML (if allowHtmlIcons is true)
      *     'name' => 'Search on Google', // Item name
      *     'subtitle' => 'Open Google in a new tab', // Optional subtitle
-     *     'action' => 'function' // Function, URL or JsExpression
+     *     'action' => 'function', // Function, URL or JsExpression
+     *     'visible' => true // Optional, whether the item should be displayed (default: true)
      * ]
      * 
      * For JavaScript actions, use \yii\web\JsExpression:
@@ -79,14 +80,32 @@ class CommandPaletteWidget extends Widget
         // Extract just the language code if it contains a country code (e.g., 'en-US' -> 'en')
         $locale = strtolower(substr($locale, 0, 2));
         
+        // Filter items based on the 'visible' property
+        $filteredItems = $this->filterVisibleItems($this->items);
+        
         return $this->render('widget', [
             'id' => $this->_id,
-            'items' => $this->items,
-            'itemsJson' => Json::encode($this->items),
+            'items' => $filteredItems,
+            'itemsJson' => Json::encode($filteredItems),
             'locale' => $locale,
             'theme' => $this->theme, // Pasar el tema a la vista
             'allowHtmlIcons' => $this->allowHtmlIcons, // Pass allowHtmlIcons to the view
         ]);
+    }
+    
+    /**
+     * Filters items based on the 'visible' property
+     * Items with visible=false will be excluded from the result
+     * If 'visible' is not set, the item will be included (default is true)
+     * 
+     * @param array $items The items to filter
+     * @return array The filtered items
+     */
+    protected function filterVisibleItems($items)
+    {
+        return array_filter($items, function($item) {
+            return !isset($item['visible']) || $item['visible'] !== false;
+        });
     }
 
     /**
@@ -102,11 +121,14 @@ class CommandPaletteWidget extends Widget
         // Extract just the language code if it contains a country code (e.g., 'en-US' -> 'en')
         $locale = strtolower(substr($locale, 0, 2));
         
+        // Filter items based on the 'visible' property
+        $filteredItems = $this->filterVisibleItems($this->items);
+        
         // Pass allowHtmlIcons to JavaScript
         $view->registerJs("window.cmdkAllowHtmlIcons_{$this->_id} = " . ($this->allowHtmlIcons ? 'true' : 'false') . ";", \yii\web\View::POS_HEAD);
         
-        // Initialize the command palette with the items and locale
-        $js = "window.commandPalette_{$this->_id} = new CommandPalette('{$this->_id}', " . Json::encode($this->items) . ", '{$locale}');";
+        // Initialize the command palette with the filtered items and locale
+        $js = "window.commandPalette_{$this->_id} = new CommandPalette('{$this->_id}', " . Json::encode($filteredItems) . ", '{$locale}');";
         $view->registerJs($js);
     }
 }

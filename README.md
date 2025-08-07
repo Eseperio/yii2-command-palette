@@ -72,6 +72,7 @@ Each item in the command palette can have the following properties:
 - `name` (string): The name of the item
 - `subtitle` (string, optional): A subtitle or description
 - `action` (string|callable): A URL or JavaScript function to execute when the item is selected
+- `visible` (boolean, optional): Whether the item should be displayed (default: true)
 
 The widget itself can be configured with the following properties:
 
@@ -264,6 +265,40 @@ echo CommandPaletteWidget::widget([
 ```
 
 Each command palette will have a unique ID and can be opened independently.
+
+### Conditional Item Display
+
+You can use the `visible` property to conditionally display items based on certain conditions, similar to other Yii2 widgets:
+
+```php
+echo CommandPaletteWidget::widget([
+    'items' => [
+        [
+            'icon' => '🏠',
+            'name' => 'Home',
+            'subtitle' => 'Go to homepage',
+            'action' => '/',
+            'visible' => true, // This item will be displayed (default behavior)
+        ],
+        [
+            'icon' => '👤',
+            'name' => 'Admin Panel',
+            'subtitle' => 'Access admin panel',
+            'action' => '/admin',
+            'visible' => Yii::$app->user->can('admin'), // Only visible to admin users
+        ],
+        [
+            'icon' => '📊',
+            'name' => 'Reports',
+            'subtitle' => 'View reports',
+            'action' => '/reports',
+            'visible' => false, // This item will not be displayed
+        ],
+    ],
+]);
+```
+
+Items with `visible` set to `false` will be filtered out and not displayed in the command palette.
 
 ### Language Support
 
