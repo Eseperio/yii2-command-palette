@@ -145,14 +145,14 @@ export function scrollToSelected(listElement) {
  */
 export function executeItemAction(item) {
     if (!item) return;
-    
+
     if (typeof item.action === 'function') {
         item.action();
     } else if (typeof item.action === 'string') {
-        if (/^(https?:)?\/\//.test(item.action)) {
-            window.location.assign(item.action);
+        if (/^#/.test(item.action)) {
+            window.location.hash = item.action;
         } else {
-            window.location.pathname = item.action;
+            window.location.href = item.action;
         }
     }
 }
