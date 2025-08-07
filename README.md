@@ -1,6 +1,8 @@
 # Yii2 Command Palette Widget
 
-A widget to add a command palette to your Yii2 application, similar to the ones in VSCode, GitHub, and other modern applications. The command palette provides a quick way to access commands and navigate through your application using keyboard shortcuts.
+A widget to add a command palette to your Yii2 application, similar to the ones in VSCode, GitHub, and other modern
+applications. The command palette provides a quick way to access commands and navigate through your application using
+keyboard shortcuts.
 
 ![Command Palette Demo](img.png)
 
@@ -15,6 +17,9 @@ A widget to add a command palette to your Yii2 application, similar to the ones 
 - 📱 Responsive design
 - 🔗 Support for URLs and JavaScript actions
 - 🖼️ Support for emoji, image icons, and HTML icons (FontAwesome, etc.)
+
+> Want to see a complex demo in action? You can clone the repository, install dependencies and then run `composer serve` to start a
+> test application that demonstrates the command palette widget and its uses.
 
 ## Requirements
 
@@ -137,28 +142,29 @@ if (window.commandPalette_w1) {
 
 ### Using CSS Variables
 
-The command palette supports customization through CSS variables. You can set these variables in your own stylesheet to customize the appearance:
+The command palette supports customization through CSS variables. You can set these variables in your own stylesheet to
+customize the appearance:
 
 ```css
 /* Custom command palette styles using CSS variables */
 :root {
-  /* Primary colors */
-  --cmdk-primary-color: #3b82f6;       /* Primary color (buttons, icons, focus) */
-  --cmdk-background-color: #1e293b;    /* Background color of the panel */
-  
-  /* Element colors */
-  --cmdk-element-title-color: #f8fafc;  /* Color of item titles */
-  --cmdk-element-background-color: #334155; /* Background color for selected/hover items */
-  --cmdk-element-subtitle-color: #94a3b8; /* Color of item subtitles */
-  
-  /* Spacing */
-  --cmdk-element-padding: 12px 10px;    /* Padding for items */
-  --cmdk-element-margin: 0;             /* Margin for the list */
-  
-  /* Border radius */
-  --cmdk-border-radius: 8px;            /* Border radius for the panel */
-  --cmdk-element-border-radius: 6px;    /* Border radius for items */
-  --cmdk-input-border-radius: 6px;      /* Border radius for the search input */
+    /* Primary colors */
+    --cmdk-primary-color: #3b82f6; /* Primary color (buttons, icons, focus) */
+    --cmdk-background-color: #1e293b; /* Background color of the panel */
+
+    /* Element colors */
+    --cmdk-element-title-color: #f8fafc; /* Color of item titles */
+    --cmdk-element-background-color: #334155; /* Background color for selected/hover items */
+    --cmdk-element-subtitle-color: #94a3b8; /* Color of item subtitles */
+
+    /* Spacing */
+    --cmdk-element-padding: 12px 10px; /* Padding for items */
+    --cmdk-element-margin: 0; /* Margin for the list */
+
+    /* Border radius */
+    --cmdk-border-radius: 8px; /* Border radius for the panel */
+    --cmdk-element-border-radius: 6px; /* Border radius for items */
+    --cmdk-input-border-radius: 6px; /* Border radius for the search input */
 }
 ```
 
@@ -211,7 +217,8 @@ You can also customize the appearance by directly overriding the CSS classes:
 
 ### HTML Icons
 
-You can use HTML for icons by setting the `allowHtmlIcons` property to `true`. This is useful for using icon libraries like FontAwesome:
+You can use HTML for icons by setting the `allowHtmlIcons` property to `true`. This is useful for using icon libraries
+like FontAwesome:
 
 ```php
 // Include FontAwesome in your layout or view
@@ -268,7 +275,8 @@ Each command palette will have a unique ID and can be opened independently.
 
 ### Conditional Item Display
 
-You can use the `visible` property to conditionally display items based on certain conditions, similar to other Yii2 widgets:
+You can use the `visible` property to conditionally display items based on certain conditions, similar to other Yii2
+widgets:
 
 ```php
 echo CommandPaletteWidget::widget([
@@ -302,7 +310,8 @@ Items with `visible` set to `false` will be filtered out and not displayed in th
 
 ### Language Support
 
-The command palette supports 10 languages: English (default), Spanish, French, German, Italian, Portuguese, Russian, Chinese (Simplified), Japanese, and Arabic.
+The command palette supports 10 languages: English (default), Spanish, French, German, Italian, Portuguese, Russian,
+Chinese (Simplified), Japanese, and Arabic.
 
 You can specify the locale when initializing the widget:
 
@@ -338,7 +347,8 @@ echo CommandPaletteWidget::widget([
 
 ### Customizing Keyboard Shortcuts
 
-By default, the command palette opens with Ctrl+K (Windows/Linux) or Cmd+K (Mac). You can customize this shortcut by specifying the `keyboardShortcuts` parameter:
+By default, the command palette opens with Ctrl+K (Windows/Linux) or Cmd+K (Mac). You can customize this shortcut by
+specifying the `keyboardShortcuts` parameter:
 
 ```php
 echo CommandPaletteWidget::widget([
@@ -373,19 +383,21 @@ echo CommandPaletteWidget::widget([
 
 ## Development and Testing
 
-The package includes a test application that demonstrates the usage of the command palette widget. You can run this application using the built-in PHP server:
+The package includes a test application that demonstrates the usage of the command palette widget. You can run this
+application using the built-in PHP server:
 
 ```bash
 composer serve
 ```
 
-This will start a PHP server on `localhost:8081`. Open your browser and navigate to http://localhost:8081 to see the command palette widget in action.
+This will start a PHP server on `localhost:8081`. Open your browser and navigate to http://localhost:8081 to see the
+command palette widget in action.
 
 The test application includes several examples:
+
 - Basic usage of the command palette
 - Multiple command palettes on the same page
 - Custom styled command palette
-
 
 ## License
 
