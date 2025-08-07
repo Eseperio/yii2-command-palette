@@ -72,13 +72,23 @@ export function renderList(listElement, items, selectedIdx = 0, locale = 'en') {
         
         // Handle icon
         if (item.icon) {
+            // Get the widget ID from the list element ID
+            const widgetId = listElement.id.replace('cmdkList-', '');
+            // Check if HTML icons are allowed for this widget
+            const allowHtmlIcons = window[`cmdkAllowHtmlIcons_${widgetId}`] || false;
+            
             // Check if the icon is a URL
             if (typeof item.icon === 'string' && item.icon.match(/^https?:\/\//)) {
                 // Replace the icon placeholder with an img tag
                 itemHtml = itemHtml.replace(/{{#icon}}([\s\S]*?){{\/icon}}/g, 
                     `<img src="${item.icon}" class="cmdk-icon" style="width: 22px; height: 22px; object-fit: cover;">`);
+            } else if (allowHtmlIcons) {
+                // If HTML icons are allowed, use the icon content as HTML
+                // Replace the icon placeholder with the HTML content
+                itemHtml = itemHtml.replace(/{{#icon}}([\s\S]*?){{\/icon}}/g, 
+                    item.icon);
             } else {
-                // Replace the icon content
+                // Replace the icon content (treat as text)
                 itemHtml = itemHtml.replace(/{{icon}}/g, item.icon);
                 // Keep the icon block
                 itemHtml = itemHtml.replace(/{{#icon}}([\s\S]*?){{\/icon}}/g, '$1');

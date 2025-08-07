@@ -6,6 +6,7 @@
  * @var $itemsJson string The items as JSON string
  * @var $locale string The locale for translations
  * @var $theme string The theme for the widget
+ * @var $allowHtmlIcons bool Whether to allow HTML in icons
  */
 
 use yii\helpers\Html;

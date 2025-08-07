@@ -24,7 +24,7 @@ class CommandPaletteWidget extends Widget
      * @var array Items to be displayed in the command palette.
      * Each item should have the following structure:
      * [
-     *     'icon' => '🔍', // Emoji or URL to an image
+     *     'icon' => '🔍', // Emoji, URL to an image, or HTML (if allowHtmlIcons is true)
      *     'name' => 'Search on Google', // Item name
      *     'subtitle' => 'Open Google in a new tab', // Optional subtitle
      *     'action' => 'function' // Function, URL or JsExpression
@@ -34,6 +34,14 @@ class CommandPaletteWidget extends Widget
      * 'action' => new \yii\web\JsExpression('function() { alert("Hello!"); }')
      */
     public $items = [];
+
+    /**
+     * @var bool Whether to allow HTML in icons.
+     * If true, the icon content will be rendered as HTML, allowing the use of
+     * custom HTML like FontAwesome icons: '<i class="fas fa-search"></i>'
+     * Note: Be careful with user-provided content to avoid XSS vulnerabilities.
+     */
+    public $allowHtmlIcons = false;
     
     /**
      * @var string Locale for translations. If null, the application locale will be used.
@@ -77,6 +85,7 @@ class CommandPaletteWidget extends Widget
             'itemsJson' => Json::encode($this->items),
             'locale' => $locale,
             'theme' => $this->theme, // Pasar el tema a la vista
+            'allowHtmlIcons' => $this->allowHtmlIcons, // Pass allowHtmlIcons to the view
         ]);
     }
 
@@ -92,6 +101,9 @@ class CommandPaletteWidget extends Widget
         $locale = $this->locale ?: \Yii::$app->language;
         // Extract just the language code if it contains a country code (e.g., 'en-US' -> 'en')
         $locale = strtolower(substr($locale, 0, 2));
+        
+        // Pass allowHtmlIcons to JavaScript
+        $view->registerJs("window.cmdkAllowHtmlIcons_{$this->_id} = " . ($this->allowHtmlIcons ? 'true' : 'false') . ";", \yii\web\View::POS_HEAD);
         
         // Initialize the command palette with the items and locale
         $js = "window.commandPalette_{$this->_id} = new CommandPalette('{$this->_id}', " . Json::encode($this->items) . ", '{$locale}');";

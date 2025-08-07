@@ -14,7 +14,7 @@ A widget to add a command palette to your Yii2 application, similar to the ones 
 - 🧩 Multiple palettes on the same page
 - 📱 Responsive design
 - 🔗 Support for URLs and JavaScript actions
-- 🖼️ Support for emoji and image icons
+- 🖼️ Support for emoji, image icons, and HTML icons (FontAwesome, etc.)
 
 ## Requirements
 
@@ -68,10 +68,17 @@ echo CommandPaletteWidget::widget([
 
 Each item in the command palette can have the following properties:
 
-- `icon` (string): An emoji or URL to an image
+- `icon` (string): An emoji, URL to an image, or HTML (if allowHtmlIcons is true)
 - `name` (string): The name of the item
 - `subtitle` (string, optional): A subtitle or description
 - `action` (string|callable): A URL or JavaScript function to execute when the item is selected
+
+The widget itself can be configured with the following properties:
+
+- `items` (array): The items to display in the command palette
+- `locale` (string, optional): The locale for translations
+- `theme` (string, optional): The theme to use (default, dark, or modern)
+- `allowHtmlIcons` (boolean, optional): Whether to allow HTML in icons (default: false)
 
 ### URL Actions
 
@@ -200,6 +207,41 @@ You can also customize the appearance by directly overriding the CSS classes:
 ```
 
 ## Advanced Usage
+
+### HTML Icons
+
+You can use HTML for icons by setting the `allowHtmlIcons` property to `true`. This is useful for using icon libraries like FontAwesome:
+
+```php
+// Include FontAwesome in your layout or view
+// <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+echo CommandPaletteWidget::widget([
+    'allowHtmlIcons' => true, // Enable HTML icons
+    'items' => [
+        [
+            'icon' => '<i class="fas fa-home"></i>',
+            'name' => 'Home',
+            'subtitle' => 'Go to homepage',
+            'action' => '/',
+        ],
+        [
+            'icon' => '<i class="fas fa-search"></i>',
+            'name' => 'Search',
+            'subtitle' => 'Search for content',
+            'action' => '/search',
+        ],
+        [
+            'icon' => '<i class="fas fa-cog"></i>',
+            'name' => 'Settings',
+            'subtitle' => 'Application settings',
+            'action' => '/settings',
+        ],
+    ],
+]);
+```
+
+> **Note:** Be careful when using HTML from user-provided content to avoid XSS vulnerabilities.
 
 ### Multiple Command Palettes
 

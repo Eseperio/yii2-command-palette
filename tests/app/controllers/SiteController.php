@@ -68,4 +68,14 @@ class SiteController extends Controller
     {
         return $this->render('custom');
     }
+    
+    /**
+     * Displays a test page with HTML icons (FontAwesome) in the command palette
+     *
+     * @return string
+     */
+    public function actionHtmlIcons()
+    {
+        return $this->render('html-icons');
+    }
 }
