@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.1.2]
+
+- Discard keys to prevent object type in items
+
 ## [1.1.1]
 
 - Improved action handling for urls. Removed support for SPA navigation. For projects requiring SPA navigation, use a

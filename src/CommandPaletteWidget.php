@@ -114,7 +114,7 @@ class CommandPaletteWidget extends Widget
     protected function registerAssets()
     {
         $view = $this->getView();
-        $asset = CommandPaletteAsset::register($view);
+        CommandPaletteAsset::register($view);
         
         // Use application locale if not specified
         $locale = $this->locale ?: \Yii::$app->language;
@@ -128,7 +128,7 @@ class CommandPaletteWidget extends Widget
         $view->registerJs("window.cmdkAllowHtmlIcons_{$this->_id} = " . ($this->allowHtmlIcons ? 'true' : 'false') . ";", \yii\web\View::POS_HEAD);
         
         // Initialize the command palette with the filtered items and locale
-        $js = "window.commandPalette_{$this->_id} = new CommandPalette('{$this->_id}', " . Json::encode($filteredItems) . ", '{$locale}');";
+        $js = "window.commandPalette_{$this->_id} = new CommandPalette('{$this->_id}', " . Json::encode(array_values($filteredItems)) . ", '{$locale}');";
         $view->registerJs($js);
     }
 }
