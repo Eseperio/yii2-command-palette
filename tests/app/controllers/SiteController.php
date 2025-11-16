@@ -78,4 +78,14 @@ class SiteController extends Controller
     {
         return $this->render('html-icons');
     }
+    
+    /**
+     * Displays a test page with URL type labels in the command palette
+     *
+     * @return string
+     */
+    public function actionUrlLabels()
+    {
+        return $this->render('url-labels');
+    }
 }
