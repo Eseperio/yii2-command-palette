@@ -1,0 +1,42 @@
+- [ ] **Improve js debug:** add a param to choose whether enable or disable debug in js classes. Php widget will use
+  YII_DEBUG value to set it by default, but user may override it when initializing the command palette. Then create a
+  custom Logger.js class, which has methods like log, warn, error, info, etc. Each method will check if debug is
+  enabled,
+  and if so, will output the message to console, otherwise, it will do nothing. In addition, using variadic, will pass
+  all params to console.log (or warn or whatever) but prepending a prefix to each message [CommandPalette]. This way,
+  any message will be easily identifiable. Also as palette class is created, if debug is enabled, output to console a
+  red text message indicating that command palette is initialized and debug mode is enabled, so user knows that debug is
+  enabled.
+
+- [ ] **Implement custom search endpoints**
+    - Each endpoint is a key => value being key the name of item and value the url to search endpoint
+    - Whenever user writes a sentence, if one of the words matches a key (partial or complete) the option "search "rest
+      of sentence" in $key". I.e: user writes "proceeding new user registration", the endpoint configured was
+      proceedings => url, so the action suggested is: Proceedings: search "new user registration"
+    - When user selects the action suggested, the search box will be padded on left side and a tag will be added to the
+      left of the search box indicating that user is not in searching mode for that item. Tag will have an "x" button to
+      remove it and go back to normal command palette options. It will have a fixed width to avoid recalculation of
+      padding for input. When user deletes completely the search box content, and press delete again, the tag will be
+      removed.
+    - Endpoints must return a JSON array in an specific format to be able to show results in command palette. Results
+      must be an array of objects with the information needed by command palette.
+    - While results are loading, three placeholders must be shown in command palette. Using an animated gradient
+      background is recommended.
+    - Handle errors when requesting endpoints, displaying a simple message to user while, if debug enabled, showing the
+      error details in console.
+    - Add a param to set the minimum length of characters to start searching. If less than that, do not start searching
+      and show a message.
+    - Add a param to set the timeout for triggering a request after user stops typing.
+    - Ensure previous requests are cancelled when a new one is triggered.
+
+- [ ] Implement recent items
+    - Add a param to set the maximum number of recent items to keep in memory. Zero means disabled.
+    - Whenever a user clicks on an item, add it to recent items list. Since it could be an item from a search, we will
+      store the full item object, not just the key.
+    - We use local storage to store recent items.
+    - Since this option use storage in user computer, add a chapter in documentation explaining that if this is enabled,
+      they must warn user as gdpr says (i think they only must acknowledge that they are storing data to the user with
+      the purpose of technical reasons, but users do not have to give consent)
+    - Recent items appear first in command palette options, then an hr is used to separate them from other options.
+    - Recent items participate in local search, but duplicates must be prevented. I.e: if an item is in recent
+      items, and user types something that matches that item, it must not be shown again in results.
