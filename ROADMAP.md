@@ -40,3 +40,15 @@
     - Recent items appear first in command palette options, then an hr is used to separate them from other options.
     - Recent items participate in local search, but duplicates must be prevented. I.e: if an item is in recent
       items, and user types something that matches that item, it must not be shown again in results.
+
+- [ ] **Add links scrapper**
+    - Add a param to whether enable this function. Default is disabled.
+    - When debug is enabled, show a message in console indicating that links scrapper is enabled and how many links
+      were found.
+    - This will perform a search on all links visible on the page and generate items for command palette. For each link
+      found, we will use the text of the link as title, and the url as action. If link has no text (i.e: an icon link),
+      we will use the title attribute if available, otherwise, we will skip the link, and if debug enabled, show a
+      message in console indicating that link was skipped due to missing text.
+- [ ] **Warn about unsecure actions**: whenever a url is not http and not https, show a red label before title with text
+  "unsecure". If link is mailto, show a yellow label with text "email". If link is tel, show a green label with text
+  "phone".
