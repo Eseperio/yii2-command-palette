@@ -52,6 +52,13 @@ class CommandPaletteWidget extends Widget
     public $debug = null;
     
     /**
+     * @var int Maximum number of recent items to keep in memory.
+     * Set to 0 to disable recent items functionality.
+     * Recent items are stored in localStorage and displayed at the top of the palette.
+     */
+    public $maxRecentItems = 0;
+    
+    /**
      * @var string Locale for translations. If null, the application locale will be used.
      */
     public $locale = null;
@@ -103,6 +110,7 @@ class CommandPaletteWidget extends Widget
             'theme' => $this->theme, // Pasar el tema a la vista
             'allowHtmlIcons' => $this->allowHtmlIcons, // Pass allowHtmlIcons to the view
             'debug' => $this->debug, // Pass debug to the view
+            'maxRecentItems' => $this->maxRecentItems, // Pass maxRecentItems to the view
         ]);
     }
     
@@ -142,7 +150,7 @@ class CommandPaletteWidget extends Widget
         
         // Initialize the command palette with the filtered items, locale, and debug mode
         $debug = $this->debug ? 'true' : 'false';
-        $js = "window.commandPalette_{$this->_id} = new CommandPalette('{$this->_id}', " . Json::encode(array_values($filteredItems)) . ", '{$locale}', {$debug});";
+        $js = "window.commandPalette_{$this->_id} = new CommandPalette('{$this->_id}', " . Json::encode(array_values($filteredItems)) . ", '{$locale}', {$debug}, {$this->maxRecentItems});";
         $view->registerJs($js);
     }
 }

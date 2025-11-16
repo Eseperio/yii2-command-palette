@@ -20,6 +20,7 @@ keyboard shortcuts.
 - 🆕 **URL type labels** - Automatic labels for HTTP (unsecure), email, phone, and protocol links
 - 🆕 **Debug mode** - Console logging with [CommandPalette] prefix
 - 🆕 **New tab shortcuts** - Ctrl/Cmd+Enter to open links in new tabs
+- 🆕 **Recent items** - Remember and display recently selected items at the top
 
 > Want to see a complex demo in action? You can clone the repository, install dependencies and then run `composer serve`
 > to start a
@@ -90,6 +91,7 @@ The widget itself can be configured with the following properties:
 - `theme` (string, optional): The theme to use (default, dark, or modern)
 - `allowHtmlIcons` (boolean, optional): Whether to allow HTML in icons (default: false)
 - `debug` (boolean, optional): Enable debug mode with console logging (defaults to YII_DEBUG)
+- `maxRecentItems` (int, optional): Maximum number of recent items to keep (default: 0 = disabled)
 
 ### URL Actions
 

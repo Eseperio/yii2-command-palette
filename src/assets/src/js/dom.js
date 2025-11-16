@@ -100,6 +100,15 @@ export function renderList(listElement, items, selectedIdx = 0, locale = 'en') {
     const fragment = document.createDocumentFragment();
     
     items.forEach((item, idx) => {
+        // Handle separator items
+        if (item._isSeparator) {
+            const separator = document.createElement('li');
+            separator.className = 'cmdk-separator';
+            separator.innerHTML = '<hr style="border: none; border-top: 1px solid #e5e5e5; margin: 8px 0;">';
+            fragment.appendChild(separator);
+            return;
+        }
+        
         // Create a new item from the template
         let itemHtml = templateContent;
         
