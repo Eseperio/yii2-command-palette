@@ -67,6 +67,38 @@ class CommandPaletteWidget extends Widget
     public $theme = self::THEME_DEFAULT;
 
     /**
+     * @var string|null URL endpoint for external search. If provided, enables external search functionality.
+     * The endpoint should accept a GET request with 'query' and 'type' parameters and return JSON:
+     * [
+     *     {
+     *         'icon' => '🔍',
+     *         'name' => 'Result name',
+     *         'subtitle' => 'Result description',
+     *         'action' => '/url/to/result'
+     *     },
+     *     // ...
+     * ]
+     */
+    public $searchEndpoint = null;
+
+    /**
+     * @var array|null Array of search types/categories available for external search.
+     * Each type is a string that users can match to trigger category-specific searches.
+     * Example: ['users', 'projects', 'documents']
+     */
+    public $searchTypes = null;
+
+    /**
+     * @var int Minimum number of characters required to trigger external search (default: 3)
+     */
+    public $searchMinChars = 3;
+
+    /**
+     * @var int Debounce timeout in milliseconds before triggering external search (default: 300)
+     */
+    public $searchTimeout = 300;
+
+    /**
      * {@inheritdoc}
      */
     public function init()
@@ -140,9 +172,21 @@ class CommandPaletteWidget extends Widget
         // Pass allowHtmlIcons to JavaScript
         $view->registerJs("window.cmdkAllowHtmlIcons_{$this->_id} = " . ($this->allowHtmlIcons ? 'true' : 'false') . ";", \yii\web\View::POS_HEAD);
         
-        // Initialize the command palette with the filtered items, locale, and debug mode
+        // Prepare external search configuration
+        $externalSearchConfig = null;
+        if ($this->searchEndpoint !== null) {
+            $externalSearchConfig = [
+                'endpoint' => $this->searchEndpoint,
+                'types' => $this->searchTypes ?: [],
+                'minChars' => $this->searchMinChars,
+                'timeout' => $this->searchTimeout,
+            ];
+        }
+        
+        // Initialize the command palette with the filtered items, locale, debug mode, and external search config
         $debug = $this->debug ? 'true' : 'false';
-        $js = "window.commandPalette_{$this->_id} = new CommandPalette('{$this->_id}', " . Json::encode(array_values($filteredItems)) . ", '{$locale}', {$debug});";
+        $externalSearchJson = $externalSearchConfig ? Json::encode($externalSearchConfig) : 'null';
+        $js = "window.commandPalette_{$this->_id} = new CommandPalette('{$this->_id}', " . Json::encode(array_values($filteredItems)) . ", '{$locale}', {$debug}, {$externalSearchJson});";
         $view->registerJs($js);
     }
 }

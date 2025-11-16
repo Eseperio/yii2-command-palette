@@ -167,6 +167,114 @@ $cmdk-no-results-color: var(--cmdk-element-subtitle-color, #8b8b93);
     white-space: nowrap;
     max-width: 280px;
   }
+  
+  // Search mode tag
+  .cmdk-search-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--cmdk-primary-color, #7c3aed);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: 500;
+    margin-right: 8px;
+    margin-bottom: 4px;
+    
+    .cmdk-search-tag-text {
+      line-height: 1;
+    }
+    
+    .cmdk-search-tag-close {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 1.2em;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+      
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+  
+  // Search input with tag
+  .cmdk-search-with-tag {
+    padding-left: 8px;
+  }
+  
+  // Loading item animation
+  .cmdk-item._loading {
+    pointer-events: none;
+    cursor: default;
+    background: linear-gradient(
+      90deg,
+      #f0f0f0 0%,
+      #e0e0e0 50%,
+      #f0f0f0 100%
+    );
+    background-size: 200% 100%;
+    animation: loading-gradient 1.5s ease-in-out infinite;
+    min-height: 50px;
+    
+    .cmdk-title {
+      visibility: hidden;
+    }
+    
+    .cmdk-subtitle {
+      visibility: hidden;
+    }
+  }
+  
+  @keyframes loading-gradient {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+  
+  // Error item
+  .cmdk-item._error {
+    pointer-events: none;
+    cursor: default;
+    background: #fff3cd;
+    border-left: 3px solid #ff9800;
+    
+    .cmdk-title {
+      color: #856404;
+    }
+    
+    .cmdk-subtitle {
+      color: #856404;
+    }
+  }
+  
+  // Search suggestion item
+  .cmdk-item._search-suggestion {
+    background: #e3f2fd;
+    border-left: 3px solid #2196f3;
+    
+    .cmdk-title {
+      color: #0d47a1;
+      font-weight: 600;
+    }
+    
+    .cmdk-subtitle {
+      color: #1565c0;
+    }
+    
+    &.selected {
+      background: #bbdefb;
+    }
+  }
 }
 
 // Responsive styles

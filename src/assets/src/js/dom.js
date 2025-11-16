@@ -156,6 +156,17 @@ export function renderList(listElement, items, selectedIdx = 0, locale = 'en') {
         temp.innerHTML = itemHtml;
         const li = temp.firstElementChild;
         
+        // Add special classes for loading, error, and search suggestion items
+        if (item._isLoading) {
+            li.classList.add('_loading');
+        }
+        if (item._isError) {
+            li.classList.add('_error');
+        }
+        if (item._isSearchSuggestion) {
+            li.classList.add('_search-suggestion');
+        }
+        
         // Add selected class if this is the selected item
         if (idx === selectedIdx) {
             li.classList.add('selected');
