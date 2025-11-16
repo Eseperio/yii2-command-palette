@@ -65,6 +65,8 @@ echo CommandPaletteWidget::widget([
                     <li><a href="/index.php?r=site/multiple">Multiple Palettes Example</a></li>
                     <li><a href="/index.php?r=site/custom">Custom Styled Example</a></li>
                     <li><a href="/index.php?r=site/html-icons">HTML Icons Example</a></li>
+                    <li><a href="/index.php?r=site/url-labels">URL Labels Example</a></li>
+                    <li><a href="/index.php?r=site/links-scraper">Links Scraper Example</a></li>
                 </ul>
             </div>
         </div>

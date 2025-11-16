@@ -88,4 +88,14 @@ class SiteController extends Controller
     {
         return $this->render('url-labels');
     }
+    
+    /**
+     * Displays a test page with links scraper feature in the command palette
+     *
+     * @return string
+     */
+    public function actionLinksScraper()
+    {
+        return $this->render('links-scraper');
+    }
 }

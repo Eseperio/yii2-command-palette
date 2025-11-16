@@ -6,6 +6,7 @@ import { filterItems } from './fuzzy.js';
 import { renderList, scrollToSelected, executeItemAction, setupEventListeners } from './dom.js';
 import { getTranslation, getTranslations } from './i18n.js';
 import Logger from './logger.js';
+import { scrapeLinks } from './linkScraper.js';
 
 // Import SCSS for Vite to process
 import '../scss/palette.scss';
@@ -20,11 +21,26 @@ class CommandPalette {
      * @param {Array} items - The items to display in the command palette
      * @param {string} locale - The locale for translations
      * @param {boolean} debug - Whether debug mode is enabled
+     * @param {boolean} enableLinksScraper - Whether to enable links scraper
+     * @param {Array} linkScraperExcludeSelectors - CSS selectors to exclude from link scraping
      */
-    constructor(id, items = [], locale = 'en', debug = false) {
+    constructor(id, items = [], locale = 'en', debug = false, enableLinksScraper = false, linkScraperExcludeSelectors = []) {
         this.id = id;
-        this.items = items;
-        this.filtered = [...items];
+        this.enableLinksScraper = enableLinksScraper;
+        this.linkScraperExcludeSelectors = linkScraperExcludeSelectors;
+        
+        // Initialize logger first
+        this.logger = new Logger(debug);
+        
+        // Scrape links if enabled
+        if (this.enableLinksScraper) {
+            const scrapedLinks = scrapeLinks(items, this.linkScraperExcludeSelectors, this.logger);
+            this.items = [...items, ...scrapedLinks];
+        } else {
+            this.items = items;
+        }
+        
+        this.filtered = [...this.items];
         this.selectedIdx = 0;
         this.isOpen = false;
         this.locale = locale;
@@ -33,10 +49,7 @@ class CommandPalette {
         // Track Ctrl/Cmd key state for new tab shortcuts
         this.ctrlKeyPressed = false;
         
-        // Initialize logger
-        this.logger = new Logger(debug);
-        
-        this.logger.log('Initializing command palette with', items.length, 'items');
+        this.logger.log('Initializing command palette with', this.items.length, 'items');
         // Get DOM elements
         this.elements = {
             overlay: document.getElementById(`cmdkOverlay-${id}`),
