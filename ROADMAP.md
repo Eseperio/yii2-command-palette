@@ -60,3 +60,7 @@
 - [ ] **Warn about unsecure actions**: whenever a url is not http and not https, show a red label before title with text
   "unsecure". If link is mailto, show a yellow label with text "email". If link is tel, show a green label with text
   "phone".
+- [ ] Handle new tab shortcuts
+    - In some browsers, like chrome, when user presses ctrl (or cmd in mac) while clicking a link, it opens link in new
+      tab. In order to support this, we need to listen for keydown and keyup events to know if ctrl/cmd is pressed or
+      not. So when a user chooses an action presing enter, if ctrl/cmd is pressed, open link in new tab.
