@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+- [+] Added new logger in js, enabled when YII_DEBUG is true, or if user sets CommandPalette::debug to true.
+- [+] Improved docs by moving some of the information to docs folder
+- [+] Added a label before option title if protocol is not https. It may show unsecure if it is httpd, or sms, whatsapp,
+  ftp, phone, for others.
+
 ## [1.1.2]
 
 - Discard keys to prevent object type in items

@@ -1,4 +1,4 @@
-- [ ] **Improve js debug:** add a param to choose whether enable or disable debug in js classes. Php widget will use
+- [X] **Improve js debug:** add a param to choose whether enable or disable debug in js classes. Php widget will use
   YII_DEBUG value to set it by default, but user may override it when initializing the command palette. Then create a
   custom Logger.js class, which has methods like log, warn, error, info, etc. Each method will check if debug is
   enabled, and if so, will output the message to console, otherwise, it will do nothing. In addition, using variadic,
