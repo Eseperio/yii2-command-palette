@@ -182,9 +182,10 @@ export function scrollToSelected(listElement) {
 /**
  * Executes the action of an item
  * @param {Object} item - The item to execute
+ * @param {boolean} openInNewTab - Whether to open the link in a new tab (Ctrl/Cmd+Enter)
  * @returns {void}
  */
-export function executeItemAction(item) {
+export function executeItemAction(item, openInNewTab = false) {
     if (!item) return;
 
     if (typeof item.action === 'function') {
@@ -193,7 +194,12 @@ export function executeItemAction(item) {
         if (/^#/.test(item.action)) {
             window.location.hash = item.action;
         } else {
-            window.location.href = item.action;
+            // If Ctrl/Cmd was pressed, open in new tab
+            if (openInNewTab) {
+                window.open(item.action, '_blank');
+            } else {
+                window.location.href = item.action;
+            }
         }
     }
 }

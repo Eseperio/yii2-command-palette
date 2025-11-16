@@ -30,6 +30,9 @@ class CommandPalette {
         this.locale = locale;
         this.debug = debug;
         
+        // Track Ctrl/Cmd key state for new tab shortcuts
+        this.ctrlKeyPressed = false;
+        
         // Initialize logger
         this.logger = new Logger(debug);
         
@@ -66,6 +69,21 @@ class CommandPalette {
             onPanelBlur: this.handlePanelBlur.bind(this),
             onFocusIn: this.handleFocusIn.bind(this),
             onGlobalKeyDown: this.handleGlobalKeyDown.bind(this)
+        });
+        
+        // Track Ctrl/Cmd key state globally
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Control' || e.key === 'Meta') {
+                this.ctrlKeyPressed = true;
+                this.logger.log('Ctrl/Cmd key pressed');
+            }
+        });
+        
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'Control' || e.key === 'Meta') {
+                this.ctrlKeyPressed = false;
+                this.logger.log('Ctrl/Cmd key released');
+            }
         });
         
         // Initial render
@@ -202,8 +220,8 @@ class CommandPalette {
         const item = this.filtered[idx];
         if (!item) return;
         
-        this.logger.log('Item selected:', item.name);
-        executeItemAction(item); // Ejecuta la acción primero
+        this.logger.log('Item selected:', item.name, 'Ctrl/Cmd pressed:', this.ctrlKeyPressed);
+        executeItemAction(item, this.ctrlKeyPressed); // Pass Ctrl key state
         this.close();            // Luego cierra el panel
     }
 }
