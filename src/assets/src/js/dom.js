@@ -5,6 +5,43 @@
 import { getTranslation } from './i18n.js';
 
 /**
+ * Get the URL type label for an action
+ * @param {string|Function} action - The action to check
+ * @returns {Object|null} - Object with type and color, or null if no label needed
+ */
+function getUrlTypeLabel(action) {
+    if (typeof action !== 'string') {
+        return null;
+    }
+    
+    const lowerAction = action.toLowerCase();
+    
+    // Check for mailto
+    if (lowerAction.startsWith('mailto:')) {
+        return { type: 'email', color: '#f59e0b' }; // yellow/amber
+    }
+    
+    // Check for tel
+    if (lowerAction.startsWith('tel:')) {
+        return { type: 'phone', color: '#10b981' }; // green
+    }
+    
+    // Check for HTTP (unsecure)
+    if (lowerAction.startsWith('http://')) {
+        return { type: 'unsecure', color: '#ef4444' }; // red - only for HTTP
+    }
+
+// Check for other common protocols (show in blue)
+// Common protocols: ftp, sms, spotify, steam, slack, etc.
+    const protoMatch = lowerAction.match(/^(ftp|ftps|sms|spotify|steam|slack|discord|zoom|teams|whatsapp):/);
+    if (protoMatch) {
+        return { type: protoMatch[1], color: '#3b82f6' };
+    }
+
+    return null;
+}
+
+/**
  * Renders a list of items in the command palette
  * @param {HTMLElement} listElement - The list element to render items in
  * @param {Array} items - The items to render
@@ -68,7 +105,15 @@ export function renderList(listElement, items, selectedIdx = 0, locale = 'en') {
         
         // Replace placeholders with actual values
         itemHtml = itemHtml.replace(/{{idx}}/g, idx);
-        itemHtml = itemHtml.replace(/{{name}}/g, item.name || '');
+        
+        // Get URL type label if applicable
+        const urlLabel = getUrlTypeLabel(item.action);
+        let nameWithLabel = item.name || '';
+        if (urlLabel) {
+            const labelHtml = `<span style="display: inline-block; padding: 2px 6px; margin-right: 6px; font-size: 10px; font-weight: bold; color: white; background-color: ${urlLabel.color}; border-radius: 3px; text-transform: uppercase;">${urlLabel.type}</span>`;
+            nameWithLabel = labelHtml + nameWithLabel;
+        }
+        itemHtml = itemHtml.replace(/{{name}}/g, nameWithLabel);
         
         // Handle icon
         if (item.icon) {
@@ -141,9 +186,10 @@ export function scrollToSelected(listElement) {
 /**
  * Executes the action of an item
  * @param {Object} item - The item to execute
+ * @param {boolean} openInNewTab - Whether to open the link in a new tab (Ctrl/Cmd+Enter)
  * @returns {void}
  */
-export function executeItemAction(item) {
+export function executeItemAction(item, openInNewTab = false) {
     if (!item) return;
 
     if (typeof item.action === 'function') {
@@ -152,7 +198,12 @@ export function executeItemAction(item) {
         if (/^#/.test(item.action)) {
             window.location.hash = item.action;
         } else {
-            window.location.href = item.action;
+            // If Ctrl/Cmd was pressed, open in new tab
+            if (openInNewTab) {
+                window.open(item.action, '_blank');
+            } else {
+                window.location.href = item.action;
+            }
         }
     }
 }

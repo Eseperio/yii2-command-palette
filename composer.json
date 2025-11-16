@@ -1,41 +1,42 @@
 {
-    "name": "eseperio/yii2-command-palette",
-    "description": "A command palette widget for Yii2 projects",
-    "type": "library",
-    "require": {
-        "php": ">=8.0",
-        "yiisoft/yii2": "^2.0"
-    },
-    "require-dev": {
-        "codeception/codeception": "^5.2",
-        "yiisoft/yii2-debug": "^2.1",
-        "yiisoft/yii2-bootstrap5": "^2.0"
-    },
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "eseperio\\commandPalette\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "E.Alamo",
-            "email": "erosdelalamo@gmail.com"
-        }
-    ],
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
-        }
-    ],
-    "scripts": {
-        "serve": "php -S localhost:8081 -t tests/app/web"
-    },
-    "minimum-stability": "stable",
-    "config": {
-        "allow-plugins": {
-            "yiisoft/yii2-composer": true
-        }
+  "name": "eseperio/yii2-command-palette",
+  "description": "A command palette widget for Yii2 projects",
+  "type": "library",
+  "require": {
+    "php": ">=8.0",
+    "yiisoft/yii2": "^2.0"
+  },
+  "require-dev": {
+    "codeception/codeception": "^5.2",
+    "yiisoft/yii2-debug": "^2.1",
+    "yiisoft/yii2-bootstrap5": "^2.0"
+  },
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "eseperio\\commandPalette\\": "src/"
     }
+  },
+  "authors": [
+    {
+      "name": "E.Alamo",
+      "email": "erosdelalamo@gmail.com"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ],
+  "scripts": {
+    "serve": "php -S localhost:8081 -t tests/app/web",
+    "build": "vite build"
+  },
+  "minimum-stability": "stable",
+  "config": {
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true
+    }
+  }
 }

@@ -39,6 +39,9 @@ use yii\bootstrap5\Html;
                 <li class="nav-item">
                     <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl(['site/html-icons']) ?>">HTML Icons</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl(['site/url-labels']) ?>">URL Labels</a>
+                </li>
             </ul>
         </nav>
     </div>

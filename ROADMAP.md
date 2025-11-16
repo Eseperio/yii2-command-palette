@@ -1,4 +1,4 @@
-- [ ] **Improve js debug:** add a param to choose whether enable or disable debug in js classes. Php widget will use
+- [X] **Improve js debug:** add a param to choose whether enable or disable debug in js classes. Php widget will use
   YII_DEBUG value to set it by default, but user may override it when initializing the command palette. Then create a
   custom Logger.js class, which has methods like log, warn, error, info, etc. Each method will check if debug is
   enabled, and if so, will output the message to console, otherwise, it will do nothing. In addition, using variadic,
@@ -56,13 +56,13 @@
     - Using an additional param in widget, user may provide selector/s for elements to be excluded from scraping. If
       link is inside one of those elements, it will be skipped.
     - Prevent duplicates by checking if link is already in command palette items.
-- [ ] **Warn about unsecure actions**: whenever a url is not http and not https, show a red label before title with text
+- [X] **Warn about unsecure actions**: whenever a url is not http and not https, show a red label before title with text
   "unsecure". If link is mailto, show a yellow label with text "email". If link is tel, show a green label with text
   "phone".
-- [ ] **Handle new tab shortcuts**
+- [X] **Handle new tab shortcuts**
     - In some browsers, like chrome, when user presses ctrl (or cmd in mac) while clicking a link, it opens link in new
       tab. In order to support this, we need to listen for keydown and keyup events to know if ctrl/cmd is pressed or
       not. So when a user chooses an action pressing enter, if ctrl/cmd is pressed, open link in new tab.
-- [ ] **Improve readme.md** by moving chapters to the docs folder and adding a table of contents. Let only in readme.md
+- [X] **Improve readme.md** by moving chapters to the docs folder and adding a table of contents. Let only in readme.md
   the most
   important information.
