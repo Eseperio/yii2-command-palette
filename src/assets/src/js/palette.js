@@ -5,6 +5,7 @@
 import { filterItems } from './fuzzy.js';
 import { renderList, scrollToSelected, executeItemAction, setupEventListeners } from './dom.js';
 import { getTranslation, getTranslations } from './i18n.js';
+import Logger from './logger.js';
 
 // Import SCSS for Vite to process
 import '../scss/palette.scss';
@@ -18,16 +19,21 @@ class CommandPalette {
      * @param {string} id - The ID of the command palette
      * @param {Array} items - The items to display in the command palette
      * @param {string} locale - The locale for translations
+     * @param {boolean} debug - Whether debug mode is enabled
      */
-    constructor(id, items = [], locale = 'en') {
+    constructor(id, items = [], locale = 'en', debug = false) {
         this.id = id;
         this.items = items;
         this.filtered = [...items];
         this.selectedIdx = 0;
         this.isOpen = false;
         this.locale = locale;
-
-        console.log(items)
+        this.debug = debug;
+        
+        // Initialize logger
+        this.logger = new Logger(debug);
+        
+        this.logger.log('Initializing command palette with', items.length, 'items');
         // Get DOM elements
         this.elements = {
             overlay: document.getElementById(`cmdkOverlay-${id}`),
@@ -73,6 +79,8 @@ class CommandPalette {
     open() {
         if (this.isOpen) return;
         
+        this.logger.log('Opening command palette');
+        
         this.isOpen = true;
         this.elements.overlay.style.display = 'block';
         this.elements.panel.style.display = 'flex';
@@ -91,6 +99,7 @@ class CommandPalette {
      * @returns {void}
      */
     close() {
+        this.logger.log('Closing command palette');
         this.isOpen = false;
         this.elements.overlay.style.display = 'none';
         this.elements.panel.style.display = 'none';
@@ -192,6 +201,8 @@ class CommandPalette {
     selectItem(idx) {
         const item = this.filtered[idx];
         if (!item) return;
+        
+        this.logger.log('Item selected:', item.name);
         executeItemAction(item); // Ejecuta la acción primero
         this.close();            // Luego cierra el panel
     }

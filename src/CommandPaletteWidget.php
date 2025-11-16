@@ -45,6 +45,13 @@ class CommandPaletteWidget extends Widget
     public $allowHtmlIcons = false;
     
     /**
+     * @var bool Whether to enable debug mode.
+     * If true, debug messages will be logged to the console.
+     * If null, it will default to YII_DEBUG constant value.
+     */
+    public $debug = null;
+    
+    /**
      * @var string Locale for translations. If null, the application locale will be used.
      */
     public $locale = null;
@@ -66,6 +73,11 @@ class CommandPaletteWidget extends Widget
     {
         parent::init();
         $this->_id = $this->getId();
+        
+        // Default debug to YII_DEBUG if not explicitly set
+        if ($this->debug === null) {
+            $this->debug = YII_DEBUG;
+        }
     }
 
     /**
@@ -90,6 +102,7 @@ class CommandPaletteWidget extends Widget
             'locale' => $locale,
             'theme' => $this->theme, // Pasar el tema a la vista
             'allowHtmlIcons' => $this->allowHtmlIcons, // Pass allowHtmlIcons to the view
+            'debug' => $this->debug, // Pass debug to the view
         ]);
     }
     
@@ -127,8 +140,9 @@ class CommandPaletteWidget extends Widget
         // Pass allowHtmlIcons to JavaScript
         $view->registerJs("window.cmdkAllowHtmlIcons_{$this->_id} = " . ($this->allowHtmlIcons ? 'true' : 'false') . ";", \yii\web\View::POS_HEAD);
         
-        // Initialize the command palette with the filtered items and locale
-        $js = "window.commandPalette_{$this->_id} = new CommandPalette('{$this->_id}', " . Json::encode(array_values($filteredItems)) . ", '{$locale}');";
+        // Initialize the command palette with the filtered items, locale, and debug mode
+        $debug = $this->debug ? 'true' : 'false';
+        $js = "window.commandPalette_{$this->_id} = new CommandPalette('{$this->_id}', " . Json::encode(array_values($filteredItems)) . ", '{$locale}', {$debug});";
         $view->registerJs($js);
     }
 }
