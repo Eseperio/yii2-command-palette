@@ -21,7 +21,8 @@ keyboard shortcuts.
 - 🆕 **Debug mode** - Console logging with [CommandPalette] prefix
 - 🆕 **New tab shortcuts** - Ctrl/Cmd+Enter to open links in new tabs
 
-> Want to see a complex demo in action? You can clone the repository, install dependencies and then run `composer serve` to start a
+> Want to see a complex demo in action? You can clone the repository, install dependencies and then run `composer serve`
+> to start a
 > test application that demonstrates the command palette widget and its uses.
 
 ## Requirements
@@ -124,7 +125,8 @@ This approach ensures that the JavaScript code is properly encoded and executed 
 
 ## Documentation
 
-- [Advanced Usage](docs/advanced-usage.md) - HTML icons, multiple palettes, conditional items, programmatic control, debug mode, keyboard shortcuts
+- [Advanced Usage](docs/advanced-usage.md) - HTML icons, multiple palettes, conditional items, programmatic control,
+  debug mode, keyboard shortcuts
 - [Customization](docs/customization.md) - CSS variables, themes, keyboard shortcuts, language support
 
 ## Development and Testing
@@ -146,6 +148,12 @@ The test application includes several examples:
 - Custom styled command palette
 - HTML icons example (FontAwesome)
 - URL type labels example
+
+### Compile assets
+
+This project uses vite to compile assets. To compile assets, run the following command:
+
+`vite build`
 
 ## License
 

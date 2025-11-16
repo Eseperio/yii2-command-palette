@@ -30,13 +30,14 @@ function getUrlTypeLabel(action) {
     if (lowerAction.startsWith('http://')) {
         return { type: 'unsecure', color: '#ef4444' }; // red - only for HTTP
     }
-    
-    // Check for other common protocols (show in blue)
-    // Common protocols: ftp, sms, spotify, steam, slack, etc.
-    if (lowerAction.match(/^(ftp|ftps|sms|spotify|steam|slack|discord|zoom|teams|whatsapp):/i)) {
-        return { type: 'protocol', color: '#3b82f6' }; // blue
+
+// Check for other common protocols (show in blue)
+// Common protocols: ftp, sms, spotify, steam, slack, etc.
+    const protoMatch = lowerAction.match(/^(ftp|ftps|sms|spotify|steam|slack|discord|zoom|teams|whatsapp):/);
+    if (protoMatch) {
+        return { type: protoMatch[1], color: '#3b82f6' };
     }
-    
+
     return null;
 }
 
