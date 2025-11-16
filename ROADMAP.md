@@ -9,12 +9,17 @@
   enabled.
 
 - [ ] **Implement custom search endpoints**
-    - Each endpoint is a key => value being key the name of item and value the url to search endpoint
-    - Whenever user writes a sentence, if one of the words matches a key (partial or complete) the option "search "rest
-      of sentence" in $key". I.e: user writes "proceeding new user registration", the endpoint configured was
-      proceedings => url, so the action suggested is: Proceedings: search "new user registration"
+    - User may provide an search endpoint url to enable this functionality.
+    - User may also provide the types of items to search. It will be an array of strings, each string will be a key,
+      that will be sent to endpoint to search for when selected.
+    - Whenever user writes a sentence, if one of the words matches a type (partial or complete) the option "search "rest
+      of sentence" in type" will be shown in results. I.e: user writes "proceeding new user registration", the word
+      proceeding matches the type, so the action suggested is: Proceedings: search "new user registration". As you can
+      see, we matched the type by similarity. As differ from normal command palette search, we match the category using
+      levenshtein distance. In order to perform the search right, we need to keep track of the word that matched the
+      type, so we can remove it from the search sentence when sending the request to endpoint.
     - When user selects the action suggested, the search box will be padded on left side and a tag will be added to the
-      left of the search box indicating that user is not in searching mode for that item. Tag will have an "x" button to
+      left of the search box indicating that user is not in searching mode for that type. Tag will have an "x" button to
       remove it and go back to normal command palette options. It will have a fixed width to avoid recalculation of
       padding for input. When user deletes completely the search box content, and press delete again, the tag will be
       removed.
@@ -49,6 +54,9 @@
       found, we will use the text of the link as title, and the url as action. If link has no text (i.e: an icon link),
       we will use the title attribute if available, otherwise, we will skip the link, and if debug enabled, show a
       message in console indicating that link was skipped due to missing text.
+    - Using an additional param in widget, user may provide selector/s for elements to be excluded from scraping. If
+      link is inside one of those elements, it will be skipped.
+    - Prevent duplicates by checking if link is already in command palette items.
 - [ ] **Warn about unsecure actions**: whenever a url is not http and not https, show a red label before title with text
   "unsecure". If link is mailto, show a yellow label with text "email". If link is tel, show a green label with text
   "phone".
