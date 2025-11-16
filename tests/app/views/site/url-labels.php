@@ -14,9 +14,10 @@ $this->title = 'URL Labels Example';
         </p>
         
         <ul>
-            <li><strong style="color: #ef4444;">UNSECURE</strong> (red) - For non-http/https URLs</li>
+            <li><strong style="color: #ef4444;">UNSECURE</strong> (red) - For HTTP (non-secure) links</li>
             <li><strong style="color: #f59e0b;">EMAIL</strong> (yellow) - For mailto: links</li>
             <li><strong style="color: #10b981;">PHONE</strong> (green) - For tel: links</li>
+            <li><strong style="color: #3b82f6;">PROTOCOL</strong> (blue) - For other common protocols (ftp, sms, spotify, etc.)</li>
         </ul>
         
         <p>

@@ -17,7 +17,7 @@ keyboard shortcuts.
 - 📱 Responsive design
 - 🔗 Support for URLs and JavaScript actions
 - 🖼️ Support for emoji, image icons, and HTML icons (FontAwesome, etc.)
-- 🆕 **URL type labels** - Automatic labels for unsecure, email, and phone links
+- 🆕 **URL type labels** - Automatic labels for HTTP (unsecure), email, phone, and protocol links
 - 🆕 **Debug mode** - Console logging with [CommandPalette] prefix
 - 🆕 **New tab shortcuts** - Ctrl/Cmd+Enter to open links in new tabs
 

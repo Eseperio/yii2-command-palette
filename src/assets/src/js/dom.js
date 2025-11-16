@@ -26,12 +26,15 @@ function getUrlTypeLabel(action) {
         return { type: 'phone', color: '#10b981' }; // green
     }
     
-    // Check for unsecure protocols (not http or https)
-    if (lowerAction.match(/^[a-z][a-z0-9+.-]*:/)) {
-        // It has a protocol
-        if (!lowerAction.startsWith('http://') && !lowerAction.startsWith('https://')) {
-            return { type: 'unsecure', color: '#ef4444' }; // red
-        }
+    // Check for HTTP (unsecure)
+    if (lowerAction.startsWith('http://')) {
+        return { type: 'unsecure', color: '#ef4444' }; // red - only for HTTP
+    }
+    
+    // Check for other common protocols (show in blue)
+    // Common protocols: ftp, sms, spotify, steam, slack, etc.
+    if (lowerAction.match(/^(ftp|ftps|sms|spotify|steam|slack|discord|zoom|teams|whatsapp):/i)) {
+        return { type: 'protocol', color: '#3b82f6' }; // blue
     }
     
     return null;

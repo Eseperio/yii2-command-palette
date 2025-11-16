@@ -146,8 +146,9 @@ Hold `Ctrl` (Windows/Linux) or `Cmd` (Mac) while pressing `Enter` to open a link
 
 The command palette automatically adds colored labels to different URL types:
 
-- **UNSECURE** (red) - For non-http/https URLs (e.g., ftp://, sms:, skype:)
+- **UNSECURE** (red) - For HTTP (non-secure) links
 - **EMAIL** (yellow) - For mailto: links
 - **PHONE** (green) - For tel: links
+- **PROTOCOL** (blue) - For other common protocols (ftp, sms, spotify, steam, slack, etc.)
 
 These labels help users identify the type of action before selecting it.
