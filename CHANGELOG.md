@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+- [+] Added external search functionality to search items from external API endpoints
+  - New properties: `searchEndpoint`, `searchTypes`, `searchMinChars`, `searchTimeout`
+  - Type matching with fuzzy search using Levenshtein distance
+  - Search suggestions when query matches a configured type
+  - Search mode with visual tag indicator
+  - Loading state with animated gradient placeholders
+  - Error handling with user-friendly messages
+  - Request debouncing and cancellation
+  - Backspace to exit search mode
 - [+] Added new logger in js, enabled when YII_DEBUG is true, or if user sets CommandPalette::debug to true.
 - [+] Improved docs by moving some of the information to docs folder
 - [+] Added a label before option title if protocol is not https. It may show unsecure if it is httpd, or sms, whatsapp,
