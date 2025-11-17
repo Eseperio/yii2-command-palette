@@ -34,7 +34,7 @@
     - Ensure previous requests are cancelled when a new one is triggered.
     - Add an example in tests app to show how to use this feature.
 
-- [ ] **Implement recent items**
+- [X] Implement recent items
     - Add a param to set the maximum number of recent items to keep in memory. Zero means disabled.
     - Whenever a user clicks on an item, add it to recent items list. Since it could be an item from a search, we will
       store the full item object, not just the key.

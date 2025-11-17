@@ -88,7 +88,7 @@ class SiteController extends Controller
     {
         return $this->render('url-labels');
     }
-    
+
     /**
      * Displays a test page with links scraper feature in the command palette
      *
@@ -97,5 +97,15 @@ class SiteController extends Controller
     public function actionLinksScraper()
     {
         return $this->render('links-scraper');
+    }
+
+    /**
+     * Displays a test page with recent items feature in the command palette
+     *
+     * @return string
+     */
+    public function actionRecentItems()
+    {
+        return $this->render('recent-items');
     }
 }
