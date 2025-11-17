@@ -91,7 +91,7 @@ The widget itself can be configured with the following properties:
 - `theme` (string, optional): The theme to use (default, dark, or modern)
 - `allowHtmlIcons` (boolean, optional): Whether to allow HTML in icons (default: false)
 - `debug` (boolean, optional): Enable debug mode with console logging (defaults to YII_DEBUG)
-- `maxRecentItems` (int, optional): Maximum number of recent items to keep (default: 0 = disabled)
+- `maxRecentItems` (int, optional): Maximum number of recent items to keep (default: 3, 0 to disable)
 
 ### URL Actions
 
