@@ -56,25 +56,11 @@ echo CommandPaletteWidget::widget([
                 <button id="openPalette" class="btn btn-primary">Open Command Palette</button>
             </div>
         </div>
-        
-        <div class="demo-section card my-4">
-            <div class="card-body">
-                <h3 class="card-title">Navigation</h3>
-                <ul>
-                    <li><strong>Basic Example</strong></li>
-                    <li><a href="/index.php?r=site/multiple">Multiple Palettes Example</a></li>
-                    <li><a href="/index.php?r=site/custom">Custom Styled Example</a></li>
-                    <li><a href="/index.php?r=site/html-icons">HTML Icons Example</a></li>
-                    <li><a href="/index.php?r=site/url-labels">URL Labels Example</a></li>
-                    <li><a href="/index.php?r=site/recent-items">Recent Items Example</a></li>
-                </ul>
-            </div>
-        </div>
     </div>
 </div>
 
 <?php
-// Render the command palette widget with French locale and recent items enabled
+// Render the command palette widget with French locale
 echo CommandPaletteWidget::widget([
     'items' => [
         [
@@ -103,8 +89,6 @@ echo CommandPaletteWidget::widget([
         ],
     ],
     'locale' => 'fr', // Use French locale
-    'maxRecentItems' => 5, // Enable recent items (keep up to 5)
-    'debug' => true, // Enable debug mode
 ]);
 ?>
 

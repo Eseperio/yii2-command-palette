@@ -57,11 +57,24 @@ class CommandPaletteWidget extends Widget
      * Recent items are stored in localStorage and displayed at the top of the palette.
      */
     public $maxRecentItems = 3;
-    
+
     /**
      * @var string Locale for translations. If null, the application locale will be used.
      */
     public $locale = null;
+
+    /**
+     * @var bool Whether to enable links scraper.
+     * If true, all visible links on the page will be scraped and added to command palette items.
+     */
+    public $enableLinksScraper = false;
+
+    /**
+     * @var array CSS selectors for elements to exclude from link scraping.
+     * Links inside these elements will not be scraped.
+     * Example: ['nav', '.footer', '#sidebar']
+     */
+    public $linkScraperExcludeSelectors = [];
 
     /**
      * @var string The ID of the widget
@@ -111,6 +124,8 @@ class CommandPaletteWidget extends Widget
             'allowHtmlIcons' => $this->allowHtmlIcons, // Pass allowHtmlIcons to the view
             'debug' => $this->debug, // Pass debug to the view
             'maxRecentItems' => $this->maxRecentItems, // Pass maxRecentItems to the view
+            'enableLinksScraper' => $this->enableLinksScraper, // Pass links scraper enabled flag
+            'linkScraperExcludeSelectors' => $this->linkScraperExcludeSelectors, // Pass exclude selectors
         ]);
     }
     
@@ -148,9 +163,21 @@ class CommandPaletteWidget extends Widget
         // Pass allowHtmlIcons to JavaScript
         $view->registerJs("window.cmdkAllowHtmlIcons_{$this->_id} = " . ($this->allowHtmlIcons ? 'true' : 'false') . ";", \yii\web\View::POS_HEAD);
         
-        // Initialize the command palette with the filtered items, locale, and debug mode
-        $debug = $this->debug ? 'true' : 'false';
-        $js = "window.commandPalette_{$this->_id} = new CommandPalette('{$this->_id}', " . Json::encode(array_values($filteredItems)) . ", '{$locale}', {$debug}, {$this->maxRecentItems});";
+        // Pass links scraper configuration to JavaScript
+        $view->registerJs("window.cmdkLinkScraperExcludeSelectors_{$this->_id} = " . Json::encode($this->linkScraperExcludeSelectors) . ";", \yii\web\View::POS_HEAD);
+
+        // Initialize the command palette with settings object
+        $settings = [
+            'locale' => $locale,
+            'debug' => $this->debug,
+            'enableLinksScraper' => $this->enableLinksScraper,
+            'linkScraperExcludeSelectors' => $this->linkScraperExcludeSelectors,
+            'maxRecentItems' => $this->maxRecentItems
+        ];
+
+        $js = "window.commandPalette_{$this->_id} = new CommandPalette('{$this->_id}', "
+            . Json::encode(array_values($filteredItems)) . ", "
+            . Json::encode($settings) . ");";
         $view->registerJs($js);
     }
 }

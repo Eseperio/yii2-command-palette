@@ -63,18 +63,6 @@ echo CommandPaletteWidget::widget([
                 <button id="openPalette" class="btn btn-primary">Open Command Palette</button>
             </div>
         </div>
-        
-        <div class="demo-section card my-4">
-            <div class="card-body">
-                <h3 class="card-title">Navigation</h3>
-                <ul>
-                    <li><a href="/">Basic Example</a></li>
-                    <li><a href="/index.php?r=site/multiple">Multiple Palettes Example</a></li>
-                    <li><a href="/index.php?r=site/custom">Custom Styled Example</a></li>
-                    <li><strong>HTML Icons Example</strong></li>
-                </ul>
-            </div>
-        </div>
     </div>
 </div>
 
