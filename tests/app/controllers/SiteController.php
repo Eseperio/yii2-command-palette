@@ -88,4 +88,14 @@ class SiteController extends Controller
     {
         return $this->render('url-labels');
     }
+    
+    /**
+     * Displays a test page with recent items feature in the command palette
+     *
+     * @return string
+     */
+    public function actionRecentItems()
+    {
+        return $this->render('recent-items');
+    }
 }
