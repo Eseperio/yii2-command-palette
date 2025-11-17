@@ -135,18 +135,6 @@ $this->title = 'Command Palette Widget - Multiple Instances';
                 ?>
             </div>
         </div>
-        
-        <div class="demo-section card my-4">
-            <div class="card-body">
-                <h3 class="card-title">Navigation</h3>
-                <ul>
-                    <li><a href="/">Basic Example</a></li>
-                    <li><strong>Multiple Palettes Example</strong></li>
-                    <li><a href="/index.php?r=site/custom">Custom Styled Example</a></li>
-                    <li><a href="/index.php?r=site/html-icons">HTML Icons Example</a></li>
-                </ul>
-            </div>
-        </div>
     </div>
 </div>
 

@@ -6,6 +6,15 @@
 
 use yii\bootstrap5\Html;
 
+// Define navigation items in one place
+$navItems = [
+    ['label' => 'Basic Example', 'url' => Yii::$app->homeUrl],
+    ['label' => 'Multiple Palettes', 'url' => Yii::$app->urlManager->createUrl(['site/multiple'])],
+    ['label' => 'Custom Styling', 'url' => Yii::$app->urlManager->createUrl(['site/custom'])],
+    ['label' => 'HTML Icons', 'url' => Yii::$app->urlManager->createUrl(['site/html-icons'])],
+    ['label' => 'URL Labels', 'url' => Yii::$app->urlManager->createUrl(['site/url-labels'])],
+    ['label' => 'Links Scraper', 'url' => Yii::$app->urlManager->createUrl(['site/links-scraper'])],
+];
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -27,21 +36,11 @@ use yii\bootstrap5\Html;
         <h1 class="mb-3">Command Palette Widget Test</h1>
         <nav>
             <ul class="nav nav-pills">
+                <?php foreach ($navItems as $item): ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= Yii::$app->homeUrl ?>">Basic Example</a>
+                    <a class="nav-link" href="<?= $item['url'] ?>"><?= $item['label'] ?></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl(['site/multiple']) ?>">Multiple Palettes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl(['site/custom']) ?>">Custom Styling</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl(['site/html-icons']) ?>">HTML Icons</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= Yii::$app->urlManager->createUrl(['site/url-labels']) ?>">URL Labels</a>
-                </li>
+                <?php endforeach; ?>
             </ul>
         </nav>
     </div>
@@ -51,9 +50,23 @@ use yii\bootstrap5\Html;
     <?= $content ?>
 </main>
 
-<footer class="footer mt-auto py-3 bg-light border-top text-muted">
+<footer class="footer mt-auto py-3 bg-light border-top">
     <div class="container">
-        <p class="mb-0">Command Palette Widget for Yii2 - Test Application</p>
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text text-muted mb-3">Command Palette Widget for Yii2 - Test Application</p>
+                <nav>
+                    <h6 class="mb-2">Navigation:</h6>
+                    <ul class="nav nav-pills flex-column flex-sm-row">
+                        <?php foreach ($navItems as $item): ?>
+                        <li class="nav-item">
+                            <a class="nav-link py-1 px-2" href="<?= $item['url'] ?>"><?= $item['label'] ?></a>
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
 </footer>
 

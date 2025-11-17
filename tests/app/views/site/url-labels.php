@@ -104,16 +104,5 @@ $this->title = 'URL Labels Example';
     ],
 ]);') ?></code></pre>
         </div>
-        
-        <div class="mt-4">
-            <h3>Navigation</h3>
-            <ul>
-                <li><?= Html::a('Basic Example', ['/site/index']) ?></li>
-                <li><?= Html::a('Multiple Palettes Example', ['/site/multiple']) ?></li>
-                <li><?= Html::a('Custom Styled Example', ['/site/custom']) ?></li>
-                <li><?= Html::a('HTML Icons Example', ['/site/html-icons']) ?></li>
-                <li><strong>URL Labels Example</strong></li>
-            </ul>
-        </div>
     </div>
 </div>
