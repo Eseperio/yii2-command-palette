@@ -21,6 +21,8 @@ keyboard shortcuts.
 - 🆕 **Debug mode** - Console logging with [CommandPalette] prefix
 - 🆕 **New tab shortcuts** - Ctrl/Cmd+Enter to open links in new tabs
 - 🆕 **External search** - Search items from external API endpoints with type filtering
+- 🆕 **Recent items** - Remember and display recently selected items at the top
+- 🆕 **Links scraper** - Automatically scrape and add links from the page
 
 > Want to see a complex demo in action? You can clone the repository, install dependencies and then run `composer serve`
 > to start a
@@ -91,6 +93,7 @@ The widget itself can be configured with the following properties:
 - `theme` (string, optional): The theme to use (default, dark, or modern)
 - `allowHtmlIcons` (boolean, optional): Whether to allow HTML in icons (default: false)
 - `debug` (boolean, optional): Enable debug mode with console logging (defaults to YII_DEBUG)
+- `maxRecentItems` (int, optional): Maximum number of recent items to keep (default: 3, 0 to disable)
 
 ### URL Actions
 

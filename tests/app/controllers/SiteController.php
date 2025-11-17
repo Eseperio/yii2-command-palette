@@ -154,4 +154,24 @@ class SiteController extends Controller
         // Return as array (re-index)
         return array_values($results);
     }
+
+    /**
+     * Displays a test page with links scraper feature in the command palette
+     *
+     * @return string
+     */
+    public function actionLinksScraper()
+    {
+        return $this->render('links-scraper');
+    }
+
+    /**
+     * Displays a test page with recent items feature in the command palette
+     *
+     * @return string
+     */
+    public function actionRecentItems()
+    {
+        return $this->render('recent-items');
+    }
 }

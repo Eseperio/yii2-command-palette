@@ -41,18 +41,6 @@ $this->title = 'Command Palette Widget - Custom Styling';
                 <button id="openCustomPalette" class="btn btn-primary">Open Custom Palette</button>
             </div>
         </div>
-        
-        <div class="demo-section card my-4">
-            <div class="card-body">
-                <h3 class="card-title">Navigation</h3>
-                <ul>
-                    <li><a href="/">Basic Example</a></li>
-                    <li><a href="/index.php?r=site/multiple">Multiple Palettes Example</a></li>
-                    <li><strong>Custom Styled Example</strong></li>
-                    <li><a href="/index.php?r=site/html-icons">HTML Icons Example</a></li>
-                </ul>
-            </div>
-        </div>
     </div>
 </div>
 
