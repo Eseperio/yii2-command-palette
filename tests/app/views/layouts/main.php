@@ -15,6 +15,7 @@ $navItems = [
     ['label' => 'URL Labels', 'url' => Yii::$app->urlManager->createUrl(['site/url-labels'])],
     ['label' => 'Recent items', 'url' => Yii::$app->urlManager->createUrl(['site/recent-items'])],
     ['label' => 'Links Scraper', 'url' => Yii::$app->urlManager->createUrl(['site/links-scraper'])],
+    ['label' => 'External search', 'url' => Yii::$app->urlManager->createUrl(['site/external-search'])],
 ];
 ?>
 <?php $this->beginPage() ?>
