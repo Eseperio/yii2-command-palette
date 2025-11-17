@@ -13,6 +13,7 @@ $navItems = [
     ['label' => 'Custom Styling', 'url' => Yii::$app->urlManager->createUrl(['site/custom'])],
     ['label' => 'HTML Icons', 'url' => Yii::$app->urlManager->createUrl(['site/html-icons'])],
     ['label' => 'URL Labels', 'url' => Yii::$app->urlManager->createUrl(['site/url-labels'])],
+    ['label' => 'Recent items', 'url' => Yii::$app->urlManager->createUrl(['site/recent-items'])],
     ['label' => 'Links Scraper', 'url' => Yii::$app->urlManager->createUrl(['site/links-scraper'])],
 ];
 ?>

@@ -19,15 +19,25 @@ class CommandPalette {
      * Constructor
      * @param {string} id - The ID of the command palette
      * @param {Array} items - The items to display in the command palette
-     * @param {string} locale - The locale for translations
-     * @param {boolean} debug - Whether debug mode is enabled
-     * @param {boolean} enableLinksScraper - Whether to enable links scraper
-     * @param {Array} linkScraperExcludeSelectors - CSS selectors to exclude from link scraping
-     * @param {number} maxRecentItems - Maximum number of recent items to keep (0 to disable)
+     * @param {Object} settings - Configuration object
+     * @param {string} settings.locale - The locale for translations (default: 'en')
+     * @param {boolean} settings.debug - Whether debug mode is enabled (default: false)
+     * @param {boolean} settings.enableLinksScraper - Whether to enable links scraper (default: false)
+     * @param {Array} settings.linkScraperExcludeSelectors - CSS selectors to exclude from link scraping (default: [])
+     * @param {number} settings.maxRecentItems - Maximum number of recent items to keep (0 to disable) (default: 0)
      */
-    // constructor(id, items = [], locale = 'en', debug = false, enableLinksScraper = false, linkScraperExcludeSelectors = []) {
-    constructor(id, items = [], locale = 'en', debug = false, maxRecentItems = 0) {
+    constructor(id, items = [], settings = {}) {
         this.id = id;
+
+        // Destructure settings with defaults
+        const {
+            locale = 'en',
+            debug = false,
+            enableLinksScraper = false,
+            linkScraperExcludeSelectors = [],
+            maxRecentItems = 0
+        } = settings;
+
         this.enableLinksScraper = enableLinksScraper;
         this.linkScraperExcludeSelectors = linkScraperExcludeSelectors;
 
