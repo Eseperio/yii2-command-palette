@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [1.2.0]
+
+- [+] Added link scrapper to automatically detect links in page, with support for excluding areas of the page via
+  selectors.
+- [+] Added recent items support, storing recent selected items in local storage and displaying them in the dropdown
+  first.
 - [+] Added new logger in js, enabled when YII_DEBUG is true, or if user sets CommandPalette::debug to true.
 - [+] Improved docs by moving some of the information to docs folder
 - [+] Added a label before option title if protocol is not https. It may show unsecure if it is httpd, or sms, whatsapp,
