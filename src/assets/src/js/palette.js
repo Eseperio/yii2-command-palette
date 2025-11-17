@@ -80,6 +80,7 @@ class CommandPalette {
         this.elements = {
             overlay: document.getElementById(`cmdkOverlay-${id}`),
             panel: document.getElementById(`cmdkPanel-${id}`),
+            searchContainer: document.getElementById(`cmdkSearchContainer-${id}`),
             search: document.getElementById(`cmdkSearch-${id}`),
             list: document.getElementById(`cmdkList-${id}`)
         };
@@ -268,6 +269,11 @@ class CommandPalette {
         this.isOpen = false;
         this.elements.overlay.style.display = 'none';
         this.elements.panel.style.display = 'none';
+        
+        // Clear search mode when closing
+        if (this.searchMode) {
+            this.exitSearchMode();
+        }
     }
     
     /**
@@ -582,8 +588,8 @@ class CommandPalette {
             this.exitSearchMode();
         });
         
-        // Insert before search input
-        this.elements.search.parentNode.insertBefore(tag, this.elements.search);
+        // Insert inside the search container (before the input)
+        this.elements.searchContainer.insertBefore(tag, this.elements.search);
         
         // Add padding to search input
         this.elements.search.classList.add('cmdk-search-with-tag');
