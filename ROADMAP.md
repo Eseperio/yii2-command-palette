@@ -7,7 +7,7 @@
   console a red text message indicating that command palette is initialized and debug mode is enabled, so user knows
   that debug is enabled.
 
-- [ ] **Implement custom search endpoints**
+- [ ] **Implement support for external options source**
     - User may provide an search endpoint url to enable this functionality.
     - User may also provide the types of items to search. It will be an array of strings, each string will be a key,
       that will be sent to endpoint to search for when selected.
@@ -32,6 +32,7 @@
       and show a message.
     - Add a param to set the timeout for triggering a request after user stops typing.
     - Ensure previous requests are cancelled when a new one is triggered.
+    - Add an example in tests app to show how to use this feature.
 
 - [X] Implement recent items
     - Add a param to set the maximum number of recent items to keep in memory. Zero means disabled.
