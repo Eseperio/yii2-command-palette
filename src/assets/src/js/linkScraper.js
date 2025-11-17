@@ -58,11 +58,14 @@ export function scrapeLinks(existingItems = [], excludeSelectors = [], logger = 
             return;
         }
         
+        // Get heading from parent elements
+        const heading = getParentHeading(link);
+        
         // Create command palette item
         const item = {
             icon: '🔗', // Default link icon
             name: text.trim(),
-            subtitle: href,
+            subtitle: heading || href, // Use heading as subtitle if found, otherwise use URL
             action: href
         };
         
@@ -98,6 +101,38 @@ function getLinkText(link) {
     }
     
     return text || null;
+}
+
+/**
+ * Searches for a heading element in parent elements
+ * @param {HTMLElement} link - The link element
+ * @returns {string|null} The text content of the first heading found, or null
+ */
+function getParentHeading(link) {
+    // Traverse up the DOM tree looking for heading elements
+    let currentElement = link.parentElement;
+    
+    while (currentElement && currentElement !== document.body) {
+        // Check if current element has a heading child that comes before the link
+        const headings = currentElement.querySelectorAll('h1, h2, h3, h4, h5, h6');
+        
+        for (const heading of headings) {
+            // Check if the heading appears before the link in the DOM
+            if (currentElement.contains(heading) && currentElement.contains(link)) {
+                // Make sure the heading is not the link itself or inside the link
+                if (!link.contains(heading) && heading !== link) {
+                    const headingText = heading.textContent.trim();
+                    if (headingText) {
+                        return headingText;
+                    }
+                }
+            }
+        }
+        
+        currentElement = currentElement.parentElement;
+    }
+    
+    return null;
 }
 
 /**
