@@ -56,7 +56,7 @@ class CommandPaletteWidget extends Widget
      * Set to 0 to disable recent items functionality.
      * Recent items are stored in localStorage and displayed at the top of the palette.
      */
-    public $maxRecentItems = 0;
+    public $maxRecentItems = 3;
     
     /**
      * @var string Locale for translations. If null, the application locale will be used.
