@@ -23,6 +23,7 @@ keyboard shortcuts.
 - 🆕 **External search** - Search items from external API endpoints with type filtering
 - 🆕 **Recent items** - Remember and display recently selected items at the top
 - 🆕 **Links scraper** - Automatically scrape and add links from the page
+- 🆕 **Recent items** - Remember and display recently selected items at the top
 
 > Want to see a complex demo in action? You can clone the repository, install dependencies and then run `composer serve`
 > to start a
