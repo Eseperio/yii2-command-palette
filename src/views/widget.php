@@ -15,7 +15,9 @@ use yii\helpers\Html;
 <div class="cmdk-main cmdk-theme-<?= $theme ?>">
     <div class="cmdk-overlay" id="cmdkOverlay-<?= $id ?>"></div>
     <div class="cmdk-panel" id="cmdkPanel-<?= $id ?>" tabindex="-1">
-        <input class="cmdk-search" id="cmdkSearch-<?= $id ?>" autocomplete="off" />
+        <div class="cmdk-search-container" id="cmdkSearchContainer-<?= $id ?>">
+            <input class="cmdk-search" id="cmdkSearch-<?= $id ?>" autocomplete="off" />
+        </div>
         <ul class="cmdk-list" id="cmdkList-<?= $id ?>"></ul>
     </div>
 

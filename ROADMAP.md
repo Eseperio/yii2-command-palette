@@ -7,7 +7,7 @@
   console a red text message indicating that command palette is initialized and debug mode is enabled, so user knows
   that debug is enabled.
 
-- [ ] **Implement support for external options source**
+- [X] **Implement support for external options source**
     - User may provide an search endpoint url to enable this functionality.
     - User may also provide the types of items to search. It will be an array of strings, each string will be a key,
       that will be sent to endpoint to search for when selected.

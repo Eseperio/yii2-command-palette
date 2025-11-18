@@ -20,6 +20,9 @@ keyboard shortcuts.
 - 🆕 **URL type labels** - Automatic labels for HTTP (unsecure), email, phone, and protocol links
 - 🆕 **Debug mode** - Console logging with [CommandPalette] prefix
 - 🆕 **New tab shortcuts** - Ctrl/Cmd+Enter to open links in new tabs
+- 🆕 **External search** - Search items from external API endpoints with type filtering
+- 🆕 **Recent items** - Remember and display recently selected items at the top
+- 🆕 **Links scraper** - Automatically scrape and add links from the page
 - 🆕 **Recent items** - Remember and display recently selected items at the top
 
 > Want to see a complex demo in action? You can clone the repository, install dependencies and then run `composer serve`
@@ -130,6 +133,7 @@ This approach ensures that the JavaScript code is properly encoded and executed 
 - [Advanced Usage](docs/advanced-usage.md) - HTML icons, multiple palettes, conditional items, programmatic control,
   debug mode, keyboard shortcuts
 - [Customization](docs/customization.md) - CSS variables, themes, keyboard shortcuts, language support
+- [External Search](docs/external-search.md) - Configure external API search with type filtering and debouncing
 
 ## Development and Testing
 
@@ -150,6 +154,7 @@ The test application includes several examples:
 - Custom styled command palette
 - HTML icons example (FontAwesome)
 - URL type labels example
+- External search example
 
 ### Compile assets
 
