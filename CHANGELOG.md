@@ -2,18 +2,18 @@
 
 ## [Unreleased]
 
-- [+] Added external search functionality to search items from external API endpoints
-  - New properties: `searchEndpoint`, `searchTypes`, `searchMinChars`, `searchTimeout`
-  - Type matching with fuzzy search using Levenshtein distance
-  - Search suggestions when query matches a configured type
-  - Search mode with visual tag indicator
-  - Loading state with animated gradient placeholders
-  - Error handling with user-friendly messages
-  - Request debouncing and cancellation
-  - Backspace to exit search mode
 
 ## [1.2.0]
 
+- [+] Added external search functionality to search items from external API endpoints
+    - New properties: `searchEndpoint`, `searchTypes`, `searchMinChars`, `searchTimeout`
+    - Type matching with fuzzy search using Levenshtein distance
+    - Search suggestions when query matches a configured type
+    - Search mode with visual tag indicator
+    - Loading state with animated gradient placeholders
+    - Error handling with user-friendly messages
+    - Request debouncing and cancellation
+    - Backspace to exit search mode
 - [+] Added support for ajax search of items using external search endpoint.
 - [+] Added link scrapper to automatically detect links in page, with support for excluding areas of the page via
   selectors.
@@ -23,6 +23,7 @@
 - [+] Improved docs by moving some of the information to docs folder
 - [+] Added a label before option title if protocol is not https. It may show unsecure if it is httpd, or sms, whatsapp,
   ftp, phone, for others.
+- [*] Refactored how settings are provided to js class
 
 ## [1.1.2]
 
