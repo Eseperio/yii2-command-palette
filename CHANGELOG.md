@@ -14,6 +14,7 @@
 
 ## [1.2.0]
 
+- [+] Added support for ajax search of items using external search endpoint.
 - [+] Added link scrapper to automatically detect links in page, with support for excluding areas of the page via
   selectors.
 - [+] Added recent items support, storing recent selected items in local storage and displaying them in the dropdown

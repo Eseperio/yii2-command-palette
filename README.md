@@ -8,6 +8,9 @@ keyboard shortcuts.
 
 ## Features
 
+> [!INFO] 1.2.0 External search is now available. Command palette + categorized search.   
+> ![img_1.png](img_1.png)
+
 - 🚀 Keyboard-driven interface (Ctrl+K / Cmd+K to open by default, customizable)
 - 🔍 Fuzzy search with Levenshtein distance algorithm
 - ⌨️ Full keyboard navigation (arrow keys, enter, escape)
@@ -17,6 +20,9 @@ keyboard shortcuts.
 - 📱 Responsive design
 - 🔗 Support for URLs and JavaScript actions
 - 🖼️ Support for emoji, image icons, and HTML icons (FontAwesome, etc.)
+
+**Available since 1.2.0**
+
 - 🆕 **URL type labels** - Automatic labels for HTTP (unsecure), email, phone, and protocol links
 - 🆕 **Debug mode** - Console logging with [CommandPalette] prefix
 - 🆕 **New tab shortcuts** - Ctrl/Cmd+Enter to open links in new tabs
@@ -25,9 +31,9 @@ keyboard shortcuts.
 - 🆕 **Links scraper** - Automatically scrape and add links from the page
 - 🆕 **Recent items** - Remember and display recently selected items at the top
 
-> Want to see a complex demo in action? You can clone the repository, install dependencies and then run `composer serve`
-> to start a
-> test application that demonstrates the command palette widget and its uses.
+# DEMO
+
+> Clone repository, run `composer install` and then `composer serve`.
 
 ## Requirements
 
