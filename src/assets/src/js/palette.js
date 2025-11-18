@@ -80,6 +80,7 @@ class CommandPalette {
         this.elements = {
             overlay: document.getElementById(`cmdkOverlay-${id}`),
             panel: document.getElementById(`cmdkPanel-${id}`),
+            searchContainer: document.getElementById(`cmdkSearchContainer-${id}`),
             search: document.getElementById(`cmdkSearch-${id}`),
             list: document.getElementById(`cmdkList-${id}`)
         };
@@ -268,6 +269,11 @@ class CommandPalette {
         this.isOpen = false;
         this.elements.overlay.style.display = 'none';
         this.elements.panel.style.display = 'none';
+        
+        // Clear search mode when closing
+        if (this.searchMode) {
+            this.exitSearchMode();
+        }
     }
     
     /**
@@ -578,12 +584,25 @@ class CommandPalette {
         `;
         
         // Add click handler for close button
-        tag.querySelector('.cmdk-search-tag-close').addEventListener('click', () => {
-            this.exitSearchMode();
-        });
-        
-        // Insert before search input
-        this.elements.search.parentNode.insertBefore(tag, this.elements.search);
+        tag.querySelector('.cmdk-search-tag-close').addEventListener('click', (e) => {
+           // Prevent default & stop propagation so panel blur/global handlers don't close the palette
+           e.preventDefault();
+           e.stopPropagation();
+
+           // Exit search mode (removes the tag)
+           this.exitSearchMode();
+
+           // Ensure the search input regains focus so the panel doesn't close due to blur handlers.
+           // Use setTimeout to run after the current event loop / blur processing.
+           setTimeout(() => {
+               if (this.elements && this.elements.search) {
+                   this.elements.search.focus();
+               }
+           }, 0);
+       });
+
+        // Insert inside the search container (before the input)
+        this.elements.searchContainer.insertBefore(tag, this.elements.search);
         
         // Add padding to search input
         this.elements.search.classList.add('cmdk-search-with-tag');
