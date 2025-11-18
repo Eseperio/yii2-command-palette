@@ -584,10 +584,23 @@ class CommandPalette {
         `;
         
         // Add click handler for close button
-        tag.querySelector('.cmdk-search-tag-close').addEventListener('click', () => {
-            this.exitSearchMode();
-        });
-        
+        tag.querySelector('.cmdk-search-tag-close').addEventListener('click', (e) => {
+           // Prevent default & stop propagation so panel blur/global handlers don't close the palette
+           e.preventDefault();
+           e.stopPropagation();
+
+           // Exit search mode (removes the tag)
+           this.exitSearchMode();
+
+           // Ensure the search input regains focus so the panel doesn't close due to blur handlers.
+           // Use setTimeout to run after the current event loop / blur processing.
+           setTimeout(() => {
+               if (this.elements && this.elements.search) {
+                   this.elements.search.focus();
+               }
+           }, 0);
+       });
+
         // Insert inside the search container (before the input)
         this.elements.searchContainer.insertBefore(tag, this.elements.search);
         

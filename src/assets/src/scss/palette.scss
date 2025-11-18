@@ -216,9 +216,16 @@ $cmdk-no-results-color: var(--cmdk-element-subtitle-color, #8b8b93);
   
   // Search input with tag
   .cmdk-search-with-tag {
-    padding-left: 100px;
+    padding-left: 110px;
   }
-  
+
+  .cmdk-search-tag-text {
+    width: 60px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
   // Loading item animation
   .cmdk-item._loading {
     pointer-events: none;
