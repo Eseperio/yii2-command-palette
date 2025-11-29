@@ -57,7 +57,8 @@ export function renderList(listElement, items, selectedIdx = 0, locale = 'en') {
     const currentItemsCount = listElement.querySelectorAll('.cmdk-item').length;
     
     // Generate a content key to detect if items have changed (not just selection)
-    const contentKey = items.map(item => item.name || '').join('|');
+    // Use null character as separator since it's unlikely to appear in item names
+    const contentKey = items.map(item => item.name || '').join('\x00');
     const prevContentKey = listElement.getAttribute('data-content-key');
     
     // If this is just a selection change and the list is already populated with the same items
