@@ -107,6 +107,23 @@ const translations = {
 };
 
 /**
+ * Escape HTML entities in a string to prevent XSS
+ * @param {string} str - The string to escape
+ * @returns {string} - The escaped string
+ */
+function escapeHtml(str) {
+    if (typeof str !== 'string') {
+        return String(str);
+    }
+    return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
+/**
  * Get a translation for a key in the specified locale
  * @param {string} key - The translation key
  * @param {string} locale - The locale code
@@ -122,10 +139,13 @@ export function getTranslation(key, locale = 'en', params = {}) {
     // If the key doesn't exist, return the key itself
     let translation = translations[locale][key] || key;
     
-    // Replace parameters in the translation string
-    for (const [paramKey, paramValue] of Object.entries(params)) {
-        translation = translation.replace(new RegExp(`\\{${paramKey}\\}`, 'g'), paramValue);
-    }
+    // Replace parameters in the translation string using a single replace call with callback
+    translation = translation.replace(/\{(\w+)\}/g, (match, paramKey) => {
+        if (Object.prototype.hasOwnProperty.call(params, paramKey)) {
+            return escapeHtml(params[paramKey]);
+        }
+        return match; // Keep the placeholder if no value provided
+    });
     
     return translation;
 }
