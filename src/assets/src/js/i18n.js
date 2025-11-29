@@ -106,6 +106,9 @@ const translations = {
     }
 };
 
+// Pre-compiled regex for parameter replacement
+const PARAM_REGEX = /\{(\w+)\}/g;
+
 /**
  * Escape HTML entities in a string to prevent XSS
  * @param {string} str - The string to escape
@@ -140,7 +143,7 @@ export function getTranslation(key, locale = 'en', params = {}) {
     let translation = translations[locale][key] || key;
     
     // Replace parameters in the translation string using a single replace call with callback
-    translation = translation.replace(/\{(\w+)\}/g, (match, paramKey) => {
+    translation = translation.replace(PARAM_REGEX, (match, paramKey) => {
         if (Object.prototype.hasOwnProperty.call(params, paramKey)) {
             return escapeHtml(params[paramKey]);
         }
