@@ -56,10 +56,15 @@ export function renderList(listElement, items, selectedIdx = 0, locale = 'en') {
     // Get the current items count from the list
     const currentItemsCount = listElement.querySelectorAll('.cmdk-item').length;
     
-    // If this is just a selection change and the list is already populated with the same number of items
-    // This ensures we do a full redraw when search results change (different number of items)
+    // Generate a content key to detect if items have changed (not just selection)
+    const contentKey = items.map(item => item.name || '').join('|');
+    const prevContentKey = listElement.getAttribute('data-content-key');
+    
+    // If this is just a selection change and the list is already populated with the same items
+    // This ensures we do a full redraw when search results change (different items or content)
     if (listElement.children.length > 0 && items.length > 0 && 
-        items.length === currentItemsCount && prevSelectedIdx !== null) {
+        items.length === currentItemsCount && prevSelectedIdx !== null &&
+        contentKey === prevContentKey) {
         // Update only the selection state
         const prevSelected = listElement.querySelector(`.cmdk-item[data-idx="${prevSelectedIdx}"]`);
         const newSelected = listElement.querySelector(`.cmdk-item[data-idx="${selectedIdx}"]`);
@@ -189,6 +194,9 @@ export function renderList(listElement, items, selectedIdx = 0, locale = 'en') {
     
     // Store the selected index as a data attribute
     listElement.setAttribute('data-selected-idx', selectedIdx);
+    
+    // Store the content key for change detection (reuse the contentKey from the beginning of the function)
+    listElement.setAttribute('data-content-key', contentKey);
 }
 
 /**
