@@ -314,8 +314,8 @@ class CommandPalette {
                     // Add a suggestion item to trigger search mode
                     const suggestionItem = {
                         icon: '🔍',
-                        name: `Search "${searchTerms || '...'}" in ${typeMatch.type}`,
-                        subtitle: 'Press Enter to search in this category',
+                        name: getTranslation('searchIn', this.locale, { query: searchTerms || '...', type: typeMatch.type }),
+                        subtitle: getTranslation('pressEnterToSearch', this.locale),
                         action: null,
                         _isSearchSuggestion: true,
                         _searchType: typeMatch.type,
@@ -472,7 +472,7 @@ class CommandPalette {
         // Perform debounced search
         this.externalSearch.debouncedSearch(query, this.searchMode.type, (results, error) => {
             if (error) {
-                this.showErrorState(error.message || 'Search failed');
+                this.showErrorState(error.message || getTranslation('searchFailed', this.locale));
                 this.logger.error('External search error:', error);
                 return;
             }
@@ -489,10 +489,11 @@ class CommandPalette {
      * @returns {void}
      */
     showLoadingState() {
+        const loadingText = getTranslation('loading', this.locale);
         const loadingItems = [
-            { icon: '', name: 'Loading...', subtitle: '', action: null, _isLoading: true },
-            { icon: '', name: 'Loading...', subtitle: '', action: null, _isLoading: true },
-            { icon: '', name: 'Loading...', subtitle: '', action: null, _isLoading: true }
+            { icon: '', name: loadingText, subtitle: '', action: null, _isLoading: true },
+            { icon: '', name: loadingText, subtitle: '', action: null, _isLoading: true },
+            { icon: '', name: loadingText, subtitle: '', action: null, _isLoading: true }
         ];
         this.filtered = loadingItems;
         renderList(this.elements.list, this.filtered, -1, this.locale);
@@ -506,7 +507,7 @@ class CommandPalette {
     showErrorState(message) {
         const errorItem = {
             icon: '⚠️',
-            name: 'Search Error',
+            name: getTranslation('searchError', this.locale),
             subtitle: message,
             action: null,
             _isError: true
