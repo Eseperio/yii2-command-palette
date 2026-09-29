@@ -131,11 +131,11 @@ class ExternalSearch {
             // the `types` configuration itself contains duplicate entries. The matched
             // type (if any) is moved to the front so it stays the most prominent suggestion.
             const uniqueTypes = [...new Set(this.types)];
-            if (typeMatch) {
-                uniqueTypes.sort((a, b) => (a === typeMatch.type ? -1 : b === typeMatch.type ? 1 : 0));
-            }
+            const orderedTypes = typeMatch
+                ? [typeMatch.type, ...uniqueTypes.filter((type) => type !== typeMatch.type)]
+                : uniqueTypes;
 
-            return uniqueTypes.map((type) => {
+            return orderedTypes.map((type) => {
                 const isMatchedType = typeMatch && typeMatch.type === type;
                 const searchTerms = isMatchedType
                     ? this.extractSearchTerms(query, typeMatch.matchedWord)

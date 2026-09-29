@@ -22,6 +22,8 @@ const TOKEN_CACHE_MAX_SIZE = 500;
 
 /**
  * Splits text into whitespace-separated tokens, memoizing the result per text value.
+ * Uses FIFO eviction (relying on Map's insertion order) once the cache is full, so
+ * only the oldest entry is dropped instead of discarding everything that was cached.
  * @param {string} text - The text to tokenize
  * @returns {Array<string>} - The non-empty tokens found in the text
  */
@@ -29,7 +31,8 @@ function getTokens(text) {
     let tokens = tokenCache.get(text);
     if (!tokens) {
         if (tokenCache.size >= TOKEN_CACHE_MAX_SIZE) {
-            tokenCache.clear();
+            const oldestKey = tokenCache.keys().next().value;
+            tokenCache.delete(oldestKey);
         }
         tokens = text.split(/\s+/).filter(Boolean);
         tokenCache.set(text, tokens);
