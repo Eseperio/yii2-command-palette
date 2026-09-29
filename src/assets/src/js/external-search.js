@@ -6,6 +6,12 @@ import Logger from './logger.js';
 import { levenshtein } from './fuzzy.js';
 
 /**
+ * Maximum number of predefined/action results allowed for the "always show type
+ * suggestions" behavior to kick in (see ExternalSearch#getSuggestedTypes).
+ */
+export const MAX_RESULTS_FOR_ALL_TYPE_SUGGESTIONS = 3;
+
+/**
  * External search handler class
  */
 class ExternalSearch {
@@ -16,6 +22,9 @@ class ExternalSearch {
      * @param {Array<string>} config.types - Available search types
      * @param {number} config.minChars - Minimum characters to trigger search
      * @param {number} config.timeout - Debounce timeout in milliseconds
+     * @param {boolean} config.alwaysShowTypeSuggestions - Whether to show "Search ... in {type}"
+     *        suggestions for every configured type even when the typed term does not match
+     *        the type name, as long as there are few enough predefined/action results (default: false)
      * @param {boolean} debug - Whether debug mode is enabled
      */
     constructor(config, debug = false) {
@@ -23,6 +32,7 @@ class ExternalSearch {
         this.types = config.types || [];
         this.minChars = config.minChars || 3;
         this.timeout = config.timeout || 300;
+        this.alwaysShowTypeSuggestions = config.alwaysShowTypeSuggestions || false;
         this.logger = new Logger(debug);
         
         // Current search state
@@ -89,6 +99,51 @@ class ExternalSearch {
             .filter(word => word.toLowerCase() !== matchedWord.toLowerCase())
             .join(' ')
             .trim();
+    }
+
+    /**
+     * Determine which configured types should show a "Search {query} in {type}" suggestion.
+     *
+     * By default, only the type whose name (fuzzy-)matches a word in the query is suggested.
+     * When `alwaysShowTypeSuggestions` is enabled, and the number of predefined/action results
+     * is 3 or fewer, a suggestion is returned for every configured type instead, so the user can
+     * pick a category to search in even without typing a matching category name. The matched
+     * type (if any) still uses the extracted search terms (with the matched word removed), while
+     * the rest use the full query. Each type appears at most once.
+     *
+     * @param {string} query - The current search query
+     * @param {number} filteredCount - Number of predefined/action results currently matched
+     * @returns {Array<{type: string, searchTerms: string}>} Ordered list of type suggestions
+     */
+    getSuggestedTypes(query, filteredCount) {
+        if (!query || !this.types || this.types.length === 0) {
+            return [];
+        }
+
+        const typeMatch = this.matchType(query);
+
+        const showAllTypes = this.alwaysShowTypeSuggestions
+            && filteredCount <= MAX_RESULTS_FOR_ALL_TYPE_SUGGESTIONS;
+
+        if (showAllTypes) {
+            return this.types.map((type) => {
+                const isMatchedType = typeMatch && typeMatch.type === type;
+                const searchTerms = isMatchedType
+                    ? this.extractSearchTerms(query, typeMatch.matchedWord)
+                    : query;
+
+                return { type, searchTerms };
+            });
+        }
+
+        if (typeMatch) {
+            return [{
+                type: typeMatch.type,
+                searchTerms: this.extractSearchTerms(query, typeMatch.matchedWord)
+            }];
+        }
+
+        return [];
     }
     
     /**

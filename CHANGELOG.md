@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+- [+] Added `searchAlwaysShowTypeSuggestions` option to show a "Search {query} in {category}" suggestion for every
+  configured search type when the number of predefined/action results is 3 or fewer, even if the typed term doesn't
+  match a category name. Defaults to `false` to preserve existing behavior.
+- [*] Tightened the Levenshtein/fuzzy matching to be length-aware: a candidate word is now only considered a fuzzy
+  match if its length differs from the query length by at most 2 characters, preventing short queries from matching
+  substrings of much longer, unrelated words (e.g. "caja" no longer matches actions belonging to "catalog").
 
 ## [1.2.0]
 

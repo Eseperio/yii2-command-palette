@@ -3,7 +3,19 @@
  */
 
 /**
- * Returns the minimum Levenshtein distance between the query and any substring of 'text'
+ * Maximum allowed difference (in characters) between the query length and the
+ * length of the candidate word/text being compared. This prevents short queries
+ * from fuzzy-matching substrings of much longer words (e.g. "caja" should not
+ * match a substring of "catalog" just because that substring is close enough).
+ */
+export const MAX_FUZZY_LENGTH_DIFF = 2;
+
+/**
+ * Returns the minimum Levenshtein distance between the query and 'text', comparing
+ * the query against the full text and against each individual word/token in it.
+ * A length-aware constraint is enforced: a candidate is only considered if its
+ * length does not differ from the query length by more than MAX_FUZZY_LENGTH_DIFF
+ * characters, avoiding false positives on much longer/shorter words.
  * @param {string} query - The search query
  * @param {string} text - The text to search in
  * @returns {number} - The minimum Levenshtein distance
@@ -12,14 +24,21 @@ export function fuzzyMinLevenshtein(query, text) {
     if (!query || !text) return Infinity;
     let minDist = Infinity;
 
-    // Search in all substrings of the same length as the query
-    for (let i = 0; i <= text.length - query.length; i++) {
-        const substr = text.substr(i, query.length);
-        minDist = Math.min(minDist, levenshtein(query, substr));
+    // Compare against the full text, if the lengths are close enough
+    if (Math.abs(text.length - query.length) <= MAX_FUZZY_LENGTH_DIFF) {
+        minDist = Math.min(minDist, levenshtein(query, text));
     }
 
-    // Also compare with the full text (in case the query is longer than the text)
-    minDist = Math.min(minDist, levenshtein(query, text));
+    // Compare against each individual word/token, respecting the same length constraint.
+    // This allows matching a single word within a longer phrase without letting the
+    // query fuzzy-match an arbitrary substring of a much longer word.
+    const tokens = text.split(/\s+/).filter(Boolean);
+    for (const token of tokens) {
+        if (Math.abs(token.length - query.length) > MAX_FUZZY_LENGTH_DIFF) {
+            continue;
+        }
+        minDist = Math.min(minDist, levenshtein(query, token));
+    }
 
     return minDist;
 }

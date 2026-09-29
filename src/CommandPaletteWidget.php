@@ -119,6 +119,17 @@ class CommandPaletteWidget extends Widget
     public $searchTimeout = 300;
 
     /**
+     * @var bool Whether to always show "Search {query} in {category}" suggestions for every
+     * configured search type, even when the typed term does not match the category name.
+     * When enabled, the suggestions are only shown while the number of predefined/action
+     * results is 3 or fewer, so the user can still comfortably pick a category to search in
+     * even when there are not many local matches.
+     * Default is false, preserving the previous behavior where a suggestion is only shown
+     * for the category whose name (fuzzy-)matches the typed term.
+     */
+    public $searchAlwaysShowTypeSuggestions = false;
+
+    /**
      * {@inheritdoc}
      */
     public function init()
@@ -206,6 +217,7 @@ class CommandPaletteWidget extends Widget
                 'types' => $this->searchTypes ?: [],
                 'minChars' => $this->searchMinChars,
                 'timeout' => $this->searchTimeout,
+                'alwaysShowTypeSuggestions' => $this->searchAlwaysShowTypeSuggestions,
             ];
         }
 
