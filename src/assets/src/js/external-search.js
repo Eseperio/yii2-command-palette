@@ -109,7 +109,8 @@ class ExternalSearch {
      * is 3 or fewer, a suggestion is returned for every configured type instead, so the user can
      * pick a category to search in even without typing a matching category name. The matched
      * type (if any) still uses the extracted search terms (with the matched word removed), while
-     * the rest use the full query. Each type appears at most once.
+     * the rest use the full query. Each type appears at most once, and the matched type (if any)
+     * is placed first so it remains the most prominent suggestion.
      *
      * @param {string} query - The current search query
      * @param {number} filteredCount - Number of predefined/action results currently matched
@@ -127,8 +128,12 @@ class ExternalSearch {
 
         if (showAllTypes) {
             // Deduplicate configured types so each one appears at most once, even if
-            // the `types` configuration itself contains duplicate entries.
+            // the `types` configuration itself contains duplicate entries. The matched
+            // type (if any) is moved to the front so it stays the most prominent suggestion.
             const uniqueTypes = [...new Set(this.types)];
+            if (typeMatch) {
+                uniqueTypes.sort((a, b) => (a === typeMatch.type ? -1 : b === typeMatch.type ? 1 : 0));
+            }
 
             return uniqueTypes.map((type) => {
                 const isMatchedType = typeMatch && typeMatch.type === type;

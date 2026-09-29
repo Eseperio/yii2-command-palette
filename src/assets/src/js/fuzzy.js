@@ -60,7 +60,11 @@ export function fuzzyMinLevenshtein(query, text) {
     if (!query || !text) return Infinity;
     let minDist = Infinity;
 
-    // Compare against the full text, if the lengths are close enough
+    // Compare against the full text, if the lengths are close enough. This mainly matters
+    // for single-word texts (where it is equivalent to the token comparison below); for
+    // multi-word text the length constraint makes an accidental match very unlikely, since
+    // a genuinely different multi-word phrase would need to happen to have a length within
+    // MAX_FUZZY_LENGTH_DIFF characters of the query AND a low edit distance to it.
     if (Math.abs(text.length - query.length) <= MAX_FUZZY_LENGTH_DIFF) {
         minDist = Math.min(minDist, levenshtein(query, text));
     }

@@ -79,6 +79,15 @@ test('alwaysShowTypeSuggestions enabled: matched type keeps extracted search ter
     assert.equal(projectsSuggestion.searchTerms, 'users john');
 });
 
+test('alwaysShowTypeSuggestions enabled: the matched type is placed first', () => {
+    const search = createExternalSearch({ alwaysShowTypeSuggestions: true });
+
+    const suggestions = search.getSuggestedTypes('documents john', 1);
+
+    assert.equal(suggestions[0].type, 'documents');
+    assert.deepEqual(suggestions.map(s => s.type).sort(), ['documents', 'projects', 'users']);
+});
+
 test('alwaysShowTypeSuggestions enabled: each type appears only once (no duplicates)', () => {
     const search = createExternalSearch({ alwaysShowTypeSuggestions: true });
 
