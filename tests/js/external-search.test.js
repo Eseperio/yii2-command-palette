@@ -88,6 +88,17 @@ test('alwaysShowTypeSuggestions enabled: each type appears only once (no duplica
     assert.equal(types.length, new Set(types).size);
 });
 
+test('alwaysShowTypeSuggestions enabled: deduplicates types even if the configuration has duplicates', () => {
+    const search = createExternalSearch({
+        types: ['users', 'projects', 'users'],
+        alwaysShowTypeSuggestions: true
+    });
+
+    const suggestions = search.getSuggestedTypes('hello', 0);
+
+    assert.deepEqual(suggestions.map(s => s.type), ['users', 'projects']);
+});
+
 test('getSuggestedTypes returns nothing when no types are configured', () => {
     const search = createExternalSearch({ types: [], alwaysShowTypeSuggestions: true });
 

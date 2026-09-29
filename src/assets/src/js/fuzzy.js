@@ -14,8 +14,11 @@ export const MAX_FUZZY_LENGTH_DIFF = 2;
  * Cache of tokenized text (split into words), keyed by the original text string.
  * Avoids re-splitting the same item name/subtitle on every keystroke, since
  * fuzzyMinLevenshtein is called for every item on every search input change.
+ * The cache is bounded to avoid unbounded memory growth when searching through
+ * many distinct/dynamically loaded texts (e.g. external search results).
  */
 const tokenCache = new Map();
+const TOKEN_CACHE_MAX_SIZE = 500;
 
 /**
  * Splits text into whitespace-separated tokens, memoizing the result per text value.
@@ -25,6 +28,9 @@ const tokenCache = new Map();
 function getTokens(text) {
     let tokens = tokenCache.get(text);
     if (!tokens) {
+        if (tokenCache.size >= TOKEN_CACHE_MAX_SIZE) {
+            tokenCache.clear();
+        }
         tokens = text.split(/\s+/).filter(Boolean);
         tokenCache.set(text, tokens);
     }

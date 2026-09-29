@@ -126,7 +126,11 @@ class ExternalSearch {
             && filteredCount <= MAX_RESULTS_FOR_ALL_TYPE_SUGGESTIONS;
 
         if (showAllTypes) {
-            return this.types.map((type) => {
+            // Deduplicate configured types so each one appears at most once, even if
+            // the `types` configuration itself contains duplicate entries.
+            const uniqueTypes = [...new Set(this.types)];
+
+            return uniqueTypes.map((type) => {
                 const isMatchedType = typeMatch && typeMatch.type === type;
                 const searchTerms = isMatchedType
                     ? this.extractSearchTerms(query, typeMatch.matchedWord)
