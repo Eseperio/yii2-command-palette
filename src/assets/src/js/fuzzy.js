@@ -16,6 +16,15 @@ export const MAX_FUZZY_LENGTH_DIFF = 2;
  * A length-aware constraint is enforced: a candidate is only considered if its
  * length does not differ from the query length by more than MAX_FUZZY_LENGTH_DIFF
  * characters, avoiding false positives on much longer/shorter words.
+ *
+ * Note: previously this compared the query against every arbitrary substring of
+ * 'text' with the same length as the query, which allowed a short/typo'd query to
+ * match a substring crossing word boundaries anywhere inside a much longer word or
+ * phrase (e.g. a 4-letter query matching a 4-character slice of a 7-letter word).
+ * That behavior is intentionally replaced by whole-text/whole-token comparisons
+ * bound by MAX_FUZZY_LENGTH_DIFF, trading a small amount of multi-word typo recall
+ * (e.g. a heavily typo'd two-word query no longer matching a much longer phrase)
+ * for correctness on short queries.
  * @param {string} query - The search query
  * @param {string} text - The text to search in
  * @returns {number} - The minimum Levenshtein distance
