@@ -11,6 +11,27 @@
 export const MAX_FUZZY_LENGTH_DIFF = 2;
 
 /**
+ * Cache of tokenized text (split into words), keyed by the original text string.
+ * Avoids re-splitting the same item name/subtitle on every keystroke, since
+ * fuzzyMinLevenshtein is called for every item on every search input change.
+ */
+const tokenCache = new Map();
+
+/**
+ * Splits text into whitespace-separated tokens, memoizing the result per text value.
+ * @param {string} text - The text to tokenize
+ * @returns {Array<string>} - The non-empty tokens found in the text
+ */
+function getTokens(text) {
+    let tokens = tokenCache.get(text);
+    if (!tokens) {
+        tokens = text.split(/\s+/).filter(Boolean);
+        tokenCache.set(text, tokens);
+    }
+    return tokens;
+}
+
+/**
  * Returns the minimum Levenshtein distance between the query and 'text', comparing
  * the query against the full text and against each individual word/token in it.
  * A length-aware constraint is enforced: a candidate is only considered if its
@@ -41,7 +62,7 @@ export function fuzzyMinLevenshtein(query, text) {
     // Compare against each individual word/token, respecting the same length constraint.
     // This allows matching a single word within a longer phrase without letting the
     // query fuzzy-match an arbitrary substring of a much longer word.
-    const tokens = text.split(/\s+/).filter(Boolean);
+    const tokens = getTokens(text);
     for (const token of tokens) {
         if (Math.abs(token.length - query.length) > MAX_FUZZY_LENGTH_DIFF) {
             continue;

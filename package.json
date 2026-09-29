@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node --test tests/js/fuzzy.test.js tests/js/external-search.test.js"
+    "test": "node --test \"tests/js/**/*.test.js\""
   },
   "keywords": [
     "yii2",
