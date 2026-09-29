@@ -26,6 +26,7 @@ echo CommandPaletteWidget::widget([
     'searchTypes' => ['users', 'projects', 'documents'], // Required: Available search categories
     'searchMinChars' => 3,                        // Optional: Minimum characters (default: 3)
     'searchTimeout' => 300,                       // Optional: Debounce timeout in ms (default: 300)
+    'searchAlwaysShowTypeSuggestions' => false,    // Optional: Show suggestions for every category (default: false)
 ]);
 ```
 
@@ -53,6 +54,10 @@ Minimum number of characters required before triggering an external search. Defa
 ### searchTimeout (int, optional)
 
 Debounce timeout in milliseconds before sending a search request. This prevents sending too many requests while the user is typing. Default: `300`
+
+### searchAlwaysShowTypeSuggestions (bool, optional)
+
+By default, a "Search {query} in {category}" suggestion is only shown when the typed term (fuzzy-)matches one of the configured `searchTypes`. When set to `true`, a suggestion is shown for **every** configured category instead, even if the typed term does not match any category name, as long as the number of predefined/action results currently matched is **3 or fewer**. This makes it easier to search a category when the local items don't have many matches, without cluttering the list when there are already plenty of results. Default: `false` (existing behavior is preserved).
 
 ## Endpoint Response Format
 
@@ -149,6 +154,8 @@ When a type is matched, a search suggestion item appears:
    Press Enter to search in this category
 ```
 
+If `searchAlwaysShowTypeSuggestions` is enabled and there are 3 or fewer predefined/action results for the current query, a suggestion is shown for every configured type instead of only the matched one, letting the user pick any category to search in even if the typed term doesn't match a category name.
+
 ### 3. Search Mode
 
 When the user selects the search suggestion (by pressing Enter), the palette enters "search mode":
@@ -181,6 +188,7 @@ Users can exit search mode by:
 ## Features
 
 - **Fuzzy Type Matching**: Tolerant to typos (e.g., "usr" matches "users")
+- **All-Category Suggestions**: Optionally show a suggestion for every category when few local results are found (`searchAlwaysShowTypeSuggestions`)
 - **Debouncing**: Prevents excessive API calls while typing
 - **Request Cancellation**: Automatically cancels previous requests when a new search is triggered
 - **Loading State**: Provides visual feedback while searching

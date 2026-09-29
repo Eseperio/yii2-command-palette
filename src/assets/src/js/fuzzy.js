@@ -3,7 +3,58 @@
  */
 
 /**
- * Returns the minimum Levenshtein distance between the query and any substring of 'text'
+ * Maximum allowed difference (in characters) between the query length and the
+ * length of the candidate word/text being compared. This prevents short queries
+ * from fuzzy-matching substrings of much longer words (e.g. "caja" should not
+ * match a substring of "catalog" just because that substring is close enough).
+ */
+export const MAX_FUZZY_LENGTH_DIFF = 2;
+
+/**
+ * Cache of tokenized text (split into words), keyed by the original text string.
+ * Avoids re-splitting the same item name/subtitle on every keystroke, since
+ * fuzzyMinLevenshtein is called for every item on every search input change.
+ * The cache is bounded to avoid unbounded memory growth when searching through
+ * many distinct/dynamically loaded texts (e.g. external search results).
+ */
+const tokenCache = new Map();
+const TOKEN_CACHE_MAX_SIZE = 500;
+
+/**
+ * Splits text into whitespace-separated tokens, memoizing the result per text value.
+ * Uses FIFO eviction (relying on Map's insertion order) once the cache is full, so
+ * only the oldest entry is dropped instead of discarding everything that was cached.
+ * @param {string} text - The text to tokenize
+ * @returns {Array<string>} - The non-empty tokens found in the text
+ */
+function getTokens(text) {
+    let tokens = tokenCache.get(text);
+    if (!tokens) {
+        if (tokenCache.size >= TOKEN_CACHE_MAX_SIZE) {
+            const oldestKey = tokenCache.keys().next().value;
+            tokenCache.delete(oldestKey);
+        }
+        tokens = text.split(/\s+/).filter(Boolean);
+        tokenCache.set(text, tokens);
+    }
+    return tokens;
+}
+
+/**
+ * Returns the minimum Levenshtein distance between the query and 'text', comparing
+ * the query against the full text and against each individual word/token in it.
+ * A length-aware constraint is enforced: a candidate is only considered if its
+ * length does not differ from the query length by more than MAX_FUZZY_LENGTH_DIFF
+ * characters, avoiding false positives on much longer/shorter words.
+ *
+ * Note: previously this compared the query against every arbitrary substring of
+ * 'text' with the same length as the query, which allowed a short/typo'd query to
+ * match a substring crossing word boundaries anywhere inside a much longer word or
+ * phrase (e.g. a 4-letter query matching a 4-character slice of a 7-letter word).
+ * That behavior is intentionally replaced by whole-text/whole-token comparisons
+ * bound by MAX_FUZZY_LENGTH_DIFF, trading a small amount of multi-word typo recall
+ * (e.g. a heavily typo'd two-word query no longer matching a much longer phrase)
+ * for correctness on short queries.
  * @param {string} query - The search query
  * @param {string} text - The text to search in
  * @returns {number} - The minimum Levenshtein distance
@@ -12,14 +63,25 @@ export function fuzzyMinLevenshtein(query, text) {
     if (!query || !text) return Infinity;
     let minDist = Infinity;
 
-    // Search in all substrings of the same length as the query
-    for (let i = 0; i <= text.length - query.length; i++) {
-        const substr = text.substr(i, query.length);
-        minDist = Math.min(minDist, levenshtein(query, substr));
+    // Compare against the full text, if the lengths are close enough. This mainly matters
+    // for single-word texts (where it is equivalent to the token comparison below); for
+    // multi-word text the length constraint makes an accidental match very unlikely, since
+    // a genuinely different multi-word phrase would need to happen to have a length within
+    // MAX_FUZZY_LENGTH_DIFF characters of the query AND a low edit distance to it.
+    if (Math.abs(text.length - query.length) <= MAX_FUZZY_LENGTH_DIFF) {
+        minDist = Math.min(minDist, levenshtein(query, text));
     }
 
-    // Also compare with the full text (in case the query is longer than the text)
-    minDist = Math.min(minDist, levenshtein(query, text));
+    // Compare against each individual word/token, respecting the same length constraint.
+    // This allows matching a single word within a longer phrase without letting the
+    // query fuzzy-match an arbitrary substring of a much longer word.
+    const tokens = getTokens(text);
+    for (const token of tokens) {
+        if (Math.abs(token.length - query.length) > MAX_FUZZY_LENGTH_DIFF) {
+            continue;
+        }
+        minDist = Math.min(minDist, levenshtein(query, token));
+    }
 
     return minDist;
 }

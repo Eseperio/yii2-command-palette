@@ -277,6 +277,24 @@ class CommandPalette {
     }
     
     /**
+     * Build a "Search {query} in {type}" suggestion item to trigger search mode
+     * @param {string} type - The external search type/category
+     * @param {string} searchTerms - The search terms to display and use when entering search mode
+     * @returns {Object} - The suggestion item
+     */
+    buildSearchSuggestionItem(type, searchTerms) {
+        return {
+            icon: '🔍',
+            name: getTranslation('searchIn', this.locale, { query: searchTerms || '...', type }),
+            subtitle: getTranslation('pressEnterToSearch', this.locale),
+            action: null,
+            _isSearchSuggestion: true,
+            _searchType: type,
+            _searchTerms: searchTerms
+        };
+    }
+
+    /**
      * Handle search input
      * @param {Event} e - The input event
      * @returns {void}
@@ -303,27 +321,17 @@ class CommandPalette {
             // Filter all items (excluding separator)
             this.filtered = filterItems(query, allItems.filter(item => !item._isSeparator));
             
-            // Check if query matches an external search type
+            // Check if the query matches (or should show) any external search type suggestions
             if (this.externalSearch && query) {
-                const typeMatch = this.externalSearch.matchType(query);
-                
-                if (typeMatch) {
-                    // Extract search terms (removing the type word)
-                    const searchTerms = this.externalSearch.extractSearchTerms(query, typeMatch.matchedWord);
-                    
-                    // Add a suggestion item to trigger search mode
-                    const suggestionItem = {
-                        icon: '🔍',
-                        name: getTranslation('searchIn', this.locale, { query: searchTerms || '...', type: typeMatch.type }),
-                        subtitle: getTranslation('pressEnterToSearch', this.locale),
-                        action: null,
-                        _isSearchSuggestion: true,
-                        _searchType: typeMatch.type,
-                        _searchTerms: searchTerms
-                    };
-                    
-                    // Add suggestion at the beginning
-                    this.filtered = [suggestionItem, ...this.filtered];
+                const suggestedTypes = this.externalSearch.getSuggestedTypes(query, this.filtered.length);
+
+                if (suggestedTypes.length > 0) {
+                    const suggestions = suggestedTypes.map(({ type, searchTerms }) =>
+                        this.buildSearchSuggestionItem(type, searchTerms)
+                    );
+
+                    // Add suggestions at the beginning
+                    this.filtered = [...suggestions, ...this.filtered];
                 }
             }
         }
